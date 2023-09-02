@@ -8,6 +8,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.databinding.FragmentMovieListBinding
+import com.serelik.movieapp.ui.movieDetails.MovieDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +19,11 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     private val viewBinding by viewBinding(FragmentMovieListBinding::bind)
 
     val movieAdapter = MovieAdapter() {
-
+        val supportFragmentManager = requireActivity().supportFragmentManager
+        supportFragmentManager.beginTransaction()
+            .replace(android.R.id.content, MovieDetailsFragment.createFragment(it.id))
+            .addToBackStack("Movie details")
+            .commit()
     }
 
     private fun setState(movies: List<Movie>) {

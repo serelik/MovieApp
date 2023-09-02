@@ -20,6 +20,10 @@ class MovieViewHolder(view: View, val onMovieClick: (Movie) -> Unit) :
             textViewPg.text = movie.pg
             textViewTitle.text = movie.name
             textViewReviews.text = "${movie.reviews} Reviews"
+
+            imageViewPoster.setOnClickListener {
+                onMovieClick.invoke(movie)
+            }
         }
     }
 
