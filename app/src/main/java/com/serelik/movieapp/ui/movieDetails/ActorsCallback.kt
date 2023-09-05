@@ -1,9 +1,9 @@
-package com.serelik.movieapp.ui.actorDetails
+package com.example.movieappst.ui.actor
 
 import androidx.recyclerview.widget.DiffUtil
 import com.serelik.movieapp.data.local.models.Actor
 
-class MoviesCallback: DiffUtil.ItemCallback<Actor>() {
+class ActorsCallback: DiffUtil.ItemCallback<Actor>() {
     override fun areItemsTheSame(oldItem: Actor, newItem: Actor): Boolean {
        return oldItem.id == newItem.id
     }

@@ -12,6 +12,7 @@ import com.serelik.movieapp.R
 import com.serelik.movieapp.data.local.models.Actor
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.databinding.FragmentMovieDetailsBinding
+import com.serelik.movieapp.ui.actorDetails.ActorDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +26,13 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     val supportFragmentManager by lazy { requireActivity().supportFragmentManager }
 
-    val actorsAdapter = ActorsAdapter()
+    val actorsAdapter = ActorsAdapter {
+        val supportFragmentManager = requireActivity().supportFragmentManager
+        supportFragmentManager.beginTransaction()
+            .replace(android.R.id.content, ActorDetailsFragment.createFragment(it.id))
+            .addToBackStack("Actor details")
+            .commit()
+    }
 
     private fun setState(movieInfo: Pair<Movie, List<Actor>>) {
         actorsAdapter.submitList(movieInfo.second)

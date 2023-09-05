@@ -46,13 +46,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:drawableLeft="@drawable/ic_back"
             android:drawablePadding="5dp"
             android:padding="6dp"
             android:text="@string/back"
             android:textColor="@color/gray"
             app:layout_constraintStart_toStartOf="@+id/guideLineStart"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/textViewPG"
@@ -91,6 +91,7 @@
             android:layout_height="wrap_content"
             android:progressBackgroundTint="@color/white"
             android:progressTint="@color/pink"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@+id/guideLineStart"
             app:layout_constraintTop_toBottomOf="@+id/textViewGenres"
             tools:rating="4"
@@ -101,11 +102,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:layout_marginTop="2dp"
             android:textColor="@color/lightGray"
             android:textSize="8sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/ratingBar"
             app:layout_constraintTop_toTopOf="@+id/ratingBar"
+            app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
             tools:text="125 REVIEWS" />
 
         <TextView
@@ -114,12 +116,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/storyline"
+            android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@id/guideLineStart"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
         <TextView
             android:id="@+id/textViewFilmOverview"
             android:layout_width="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/guideLineStart"
             app:layout_constraintTop_toBottomOf="@+id/textViewStoryline"
@@ -131,6 +136,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/cast"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+
             app:layout_constraintStart_toStartOf="@id/guideLineStart"
             app:layout_constraintTop_toBottomOf="@+id/textViewFilmOverview" />
 
