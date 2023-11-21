@@ -12,6 +12,13 @@
         android:layout_height="wrap_content"
         android:background="@color/mainBG">
 
+        <ProgressBar
+            android:id="@+id/progressBarMovieList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            />
+
         <ImageView
             android:id="@+id/imageViewBackPoster"
             android:layout_width="match_parent"

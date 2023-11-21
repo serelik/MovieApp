@@ -9,4 +9,6 @@
     <color name="pink">#FF3466</color>
     <color name="lightGray">#6D6D80</color>
     <color name="borderColor">#80636375</color>
+
+    <color name="tabColorGrad">#8036E7</color>
 </resources>

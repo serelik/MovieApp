@@ -13,8 +13,10 @@ interface MovieDBApi {
     @GET("genre/movie/list")
     suspend fun getGenresId(): GenresListResponse
 
-    @GET("movie/popular")
-    suspend fun getPopularMovie(): MovieListResponse
+    @GET("movie/{specific}")
+    suspend fun getMoviesList(
+        @Path(value = "specific") key: String
+    ): MovieListResponse
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(

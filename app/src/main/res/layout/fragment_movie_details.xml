@@ -12,6 +12,13 @@
         android:layout_height="wrap_content"
         android:background="@color/mainBG">
 
+        <ProgressBar
+            android:id="@+id/progressBarMovieList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideLineStart"
             android:layout_width="wrap_content"

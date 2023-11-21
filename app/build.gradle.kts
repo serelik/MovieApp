@@ -24,8 +24,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -43,6 +42,7 @@ android {
     }
 
 }
+
 
 dependencies {
 
@@ -84,6 +84,7 @@ dependencies {
 
 
     implementation("com.github.bumptech.glide:glide:4.15.1")
+
 }
 
 kapt {
