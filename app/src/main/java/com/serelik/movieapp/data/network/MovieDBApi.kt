@@ -5,7 +5,7 @@ import com.serelik.movieapp.data.network.models.ActorsListResponse
 import com.serelik.movieapp.data.network.models.DetailsMovieResponse
 import com.serelik.movieapp.data.network.models.GenresListResponse
 import com.serelik.movieapp.data.network.models.MovieListResponse
-import com.serelik.movieapp.data.network.models.MoviesByActorList
+import com.serelik.movieapp.data.network.models.MoviesByActorListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -36,6 +36,6 @@ interface MovieDBApi {
     @GET("person/{actor_id}/movie_credits")
     suspend fun getMoviesByActor(
         @Path(value = "actor_id") key: Int
-    ): MoviesByActorList
+    ): MoviesByActorListResponse
 
 }

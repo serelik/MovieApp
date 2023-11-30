@@ -7,14 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.serelik.movieapp.data.LoadingResults
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.data.network.MovieDBApi
+import com.serelik.movieapp.data.network.MovieMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    private val movieApiService: MovieDBApi
+    private val movieApiService: MovieDBApi,
+    private val movieMapper: MovieMapper
 ) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<LoadingResults<List<Movie>>>()
@@ -29,7 +30,7 @@ class MovieListViewModel @Inject constructor(
                 val movieInfo = movieApiService.getMoviesList(specific)
 
                 val genres = genresInfoId.genres.associateBy({ it.id }, { it.name })
-                val movies = movieInfo.movies.map { it.parseMovieResponse(genres) }
+                val movies = movieInfo.movies.map { movieMapper.parseMovieResponse(genres, it) }
 
 
                 mutableLiveData.postValue(LoadingResults.Success(movies))

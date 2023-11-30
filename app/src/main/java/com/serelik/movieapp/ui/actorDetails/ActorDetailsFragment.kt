@@ -1,7 +1,6 @@
 package com.serelik.movieapp.ui.actorDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,7 +33,6 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.d("movieInfo checka", actorInfo.toString())
         actorInfo?.let { viewModel.getMovieAndActorInfo(it) }
 
     }
