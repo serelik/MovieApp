@@ -8,21 +8,13 @@ class MovieMapper @Inject constructor(
     private val mapper: ImageMapper
 ) {
     fun parseMovieResponse(genres: Map<Int, String>, apiModel: MovieResponse): Movie {
-        val sb = StringBuilder()
 
-        for (i in apiModel.genreIds) {
-            if (genres.containsKey(i))
-                sb.append("${genres[i]}, ")
-        }
+       val movieGenres = apiModel.genreIds.mapNotNull { genres[it] }.joinToString(separator = ", ")
 
-        if (sb.isNotEmpty()) {
-            sb.delete(sb.length - 2, sb.length)
-
-        }
         return Movie(
             id = apiModel.id,
             pg = if (apiModel.adult) "18+" else "13+",
-            genres = sb.toString(),
+            genres = movieGenres,
             rating = apiModel.voteAverage / 2.0f,
             reviews = apiModel.voteCount,
             name = apiModel.title,
