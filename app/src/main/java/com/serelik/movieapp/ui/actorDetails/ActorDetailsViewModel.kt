@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.serelik.movieapp.data.LoadingResults
 import com.serelik.movieapp.data.local.models.ActorDetails
 import com.serelik.movieapp.data.local.models.MovieByActor
 import com.serelik.movieapp.data.network.MovieDBApi
@@ -18,22 +19,26 @@ class ActorDetailsViewModel @Inject constructor(
     private val moviesByActorMapper: MoviesByActorMapper
 ) : ViewModel() {
 
-    private val mutableLiveData = MutableLiveData<Pair<ActorDetails, List<MovieByActor>>>()
+    private val mutableLiveData = MutableLiveData<LoadingResults<Pair<ActorDetails, List<MovieByActor>>>>()
 
-    val movieInfoLiveData: LiveData<Pair<ActorDetails, List<MovieByActor>>> = mutableLiveData
+    val movieInfoLiveData: LiveData<LoadingResults<Pair<ActorDetails, List<MovieByActor>>>> = mutableLiveData
 
     fun getMovieAndActorInfo(id: Int) {
         viewModelScope.launch {
-            val moviesResponse = movieApiService.getMoviesByActor(id)
-            val actorInfoResponse = movieApiService.getActor(id)
+            try {
+                mutableLiveData.postValue(LoadingResults.Loading)
+                val moviesResponse = movieApiService.getMoviesByActor(id)
+                val actorInfoResponse = movieApiService.getActor(id)
 
-            val actor = actorInfoResponse.parseActorResponse()
+                val actor = actorInfoResponse.parseActorResponse()
 
-            val movies =
-                moviesResponse.movies.map { moviesByActorMapper.parseMovieByActorResponse(it) }
+                val movies =
+                    moviesResponse.movies.map { moviesByActorMapper.parseMovieByActorResponse(it) }
 
-            mutableLiveData.postValue(Pair(actor, movies))
-
+                mutableLiveData.postValue(LoadingResults.Success(Pair(actor, movies)))
+            } catch (e: Exception) {
+                mutableLiveData.postValue(LoadingResults.Error(e))
+            }
         }
     }
 

@@ -34,20 +34,24 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
     private fun setState(state: LoadingResults<List<Movie>>) {
         when (state) {
             is LoadingResults.Error -> {
-                viewBinding.progressBarMovieList.isVisible = false
-                viewBinding.buttonTryAgain.isVisible = true
-                viewBinding.recyclerView.isVisible = false
-
+                setVisibility(isTryButton = true, isTextView = false, isLoading = false)
             }
 
-            LoadingResults.Loading -> viewBinding.progressBarMovieList.isVisible = true
+            LoadingResults.Loading -> {
+                setVisibility(isTryButton = false, isTextView = false, isLoading = true)
+            }
+
             is LoadingResults.Success -> {
-                viewBinding.progressBarMovieList.isVisible = false
+                setVisibility(isTryButton = false, isTextView = true, isLoading = false)
                 movieAdapter.submitList(state.dataInfo)
-                viewBinding.buttonTryAgain.isVisible = false
-                viewBinding.recyclerView.isVisible = true
             }
         }
+    }
+
+    private fun setVisibility(isTryButton: Boolean, isTextView: Boolean, isLoading: Boolean) {
+        viewBinding.progressBarMovieList.isVisible = isLoading
+        viewBinding.buttonTryAgain.isVisible = isTryButton
+        viewBinding.recyclerView.isVisible = isTextView
     }
 
     private fun getInfo() {
@@ -56,7 +60,6 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("fasdfdfsRF", currentList.toString())
         getInfo()
     }
 

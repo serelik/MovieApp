@@ -2,12 +2,16 @@ package com.serelik.movieapp.ui.actorDetails
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.movieappst.ui.extensions.load
 import com.serelik.movieapp.R
+import com.serelik.movieapp.data.LoadingResults
+import com.serelik.movieapp.data.local.models.Actor
 import com.serelik.movieapp.data.local.models.ActorDetails
+import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.data.local.models.MovieByActor
 import com.serelik.movieapp.databinding.FragmentActorBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,10 +29,33 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
 
     val moviesAdapter = MovieAdapter()
 
-    private fun setState(movieInfo: Pair<ActorDetails, List<MovieByActor>>) {
-        moviesAdapter.submitList(movieInfo.second)
-        setInfo(movieInfo.first)
+    private fun setState(state: LoadingResults<Pair<ActorDetails, List<MovieByActor>>>) {
+        when (state) {
+            is LoadingResults.Error -> {
+                setVisibility(isTryButton = true, isTextView = false, isLoading = false)
+            }
+
+            LoadingResults.Loading -> {
+                setVisibility(isTryButton = false, isTextView = false, isLoading = true)
+            }
+
+            is LoadingResults.Success -> {
+                moviesAdapter.submitList(state.dataInfo.second)
+                setVisibility(isTryButton = false, isTextView = true, isLoading = false)
+                setInfo(state.dataInfo.first)
+            }
+        }
     }
+
+    private fun setVisibility(isTryButton: Boolean, isTextView: Boolean, isLoading: Boolean) {
+        viewBinding.progressBarMovieList.isVisible = isLoading
+        viewBinding.buttonTryAgain.isVisible = isTryButton
+        viewBinding.recyclerView.isVisible = isTextView
+        viewBinding.textViewBiographyTitle.isVisible = isTextView
+        viewBinding.textViewFilmography.isVisible = isTextView
+        viewBinding.textViewSeeAll.isVisible = isTextView
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +73,10 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
 
         viewBinding.recyclerView.adapter = moviesAdapter
         viewBinding.recyclerView.addItemDecoration(MovieItemDecorator())
+
+        viewBinding.buttonTryAgain.setOnClickListener {
+            actorInfo?.let { viewModel.getMovieAndActorInfo(it) }
+        }
 
         viewBinding.textViewButtonBack.setOnClickListener {
             supportFragmentManager.popBackStack()
