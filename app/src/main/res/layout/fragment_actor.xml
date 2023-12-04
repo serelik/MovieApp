@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainBG">
+
+        <ImageView
+            android:id="@+id/imageViewBackPoster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/mainBG"
+            android:contentDescription="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/gradient"
+            app:layout_constraintBottom_toBottomOf="@id/imageViewBackPoster"
+            app:layout_constraintEnd_toEndOf="@id/imageViewBackPoster"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/imageViewBackPoster"
+            app:layout_constraintTop_toTopOf="@id/imageViewBackPoster"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <TextView
+            android:id="@+id/textViewButtonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:drawablePadding="5dp"
+            android:padding="6dp"
+            android:text="@string/back"
+            android:textColor="@color/gray"
+            app:layout_constraintStart_toStartOf="@+id/guideLineStart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/textViewActorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            app:layout_constraintStart_toStartOf="@+id/guideLineStart"
+            app:layout_constraintTop_toBottomOf="@+id/textViewButtonBack"
+            tools:text="Robert \nDowney Jr." />
+
+        <ImageView
+            android:id="@+id/imageViewActor"
+            android:layout_width="80dp"
+            android:layout_height="110dp"
+            android:contentDescription="@string/actor_picture_content_desc"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@+id/guideLineStart"
+            app:layout_constraintTop_toBottomOf="@+id/textViewActorName"
+            tools:background="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textViewBirthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@+id/imageViewActor"
+            app:layout_constraintTop_toTopOf="@+id/imageViewActor"
+            tools:text="4 April, 1965" />
+
+        <TextView
+            android:id="@+id/textViewBirthPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/textViewBirthday"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBirthday"
+            tools:text="New York City, New York, U.S." />
+
+        <TextView
+            android:id="@+id/textViewKnownFor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/pink"
+            app:layout_constraintStart_toStartOf="@+id/textViewBirthPlace"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBirthPlace"
+            tools:text="Actor, producer, singer" />
+
+        <TextView
+            android:id="@+id/textViewFilmography"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+
+            android:layout_marginTop="32dp"
+            android:text="@string/filmography"
+            app:layout_constraintStart_toStartOf="@id/guideLineStart"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewActor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/see_all"
+            app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+            app:layout_constraintTop_toTopOf="@+id/textViewFilmography" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="true"
+            android:orientation="horizontal"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewFilmography" />
+
+        <TextView
+            android:id="@+id/textViewBiographyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/biography"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideLineStart"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+        <TextView
+            android:id="@+id/textViewBiography"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/guideLineEnd"
+            app:layout_constraintStart_toStartOf="@+id/guideLineStart"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBiographyTitle"
+            tools:text="Robert Downey Jr. has evolved into one of the most respected actors in Hollywood. With an amazing list of credits to his name, he has managed to stay new and fresh even after over four decades in the business.
+
+Downey was born April 4, 1965 in Manhattan, New York, the son of writer, director and filmographer Robert Downey Sr. and actress Elsie Downey (née Elsie Ann Ford). Robert's father is of half Lithuanian Jewish, one quarter Hungarian Jewish, and one quarter Irish, descent, while Robert's mother was of English, Scottish, German, and Swiss-German ancestry. Robert and his sister, Allyson Downey, were immersed in film and the performing arts from a very young age, leading Downey Jr. to study at the Stagedoor Manor Performing Arts Training Center in upstate New York, before moving to California with his father following his parents' 1978 divorce. In 1982, he dropped out of Santa Monica High School to pursue acting full time. Downey Sr., himself a drug addict, exposed his son to drugs at a very early age, and Downey Jr. would go on to struggle with abuse for decades.
+" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

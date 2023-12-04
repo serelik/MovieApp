@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MovieApp</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back">Back</string>
+    <string name="storyline">Storyline</string>
+    <string name="cast">Cast</string>
+    <string name="biography">Biography</string>
+    <string name="filmography">Filmography</string>
+    <string name="see_all">See All</string>
+    <string name="actor_picture_content_desc">Actor picture</string>
 </resources>
