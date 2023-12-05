@@ -8,7 +8,9 @@ import com.serelik.movieapp.data.LoadingResults
 import com.serelik.movieapp.data.local.models.Actor
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.data.network.ActorMapper
+import com.serelik.movieapp.data.network.DetailsMovieMapper
 import com.serelik.movieapp.data.network.MovieDBApi
+import com.serelik.movieapp.data.network.MovieMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val movieApiService: MovieDBApi,
-    private val actorMapper: ActorMapper
+    private val actorMapper: ActorMapper,
+    private val movieMapper: DetailsMovieMapper
 ) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<LoadingResults<Pair<Movie, List<Actor>>>>()
@@ -36,7 +39,7 @@ class MovieDetailsViewModel @Inject constructor(
                 }
 
                 val genres = genresInfoId.genres.associateBy({ it.id }, { it.name })
-                val movie = movieInfo.parseMovieResponse(genres)
+                val movie = movieMapper.parseDetailsMovieResponse(genres, movieInfo)
 
                 mutableLiveData.postValue(LoadingResults.Success(Pair(movie, actors)))
             } catch (e: Exception) {

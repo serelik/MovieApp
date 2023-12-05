@@ -21,20 +21,4 @@ data class ActorDetailsResponse(
     @SerialName("profile_path")
     val profilePath: String?
 
-) {
-    fun parseActorResponse(): ActorDetails {
-        return ActorDetails(
-            id = id,
-            actorName = actorName,
-            biography = biography,
-            profilePicture = profilePath?.let { "${baseImageUrl}$profilePath" },
-            birthPlace = birthPlace,
-            birthday = birthday.orEmpty(),
-            knownFor = knownFor
-        )
-    }
-
-    companion object {
-        private const val baseImageUrl = "https://image.tmdb.org/t/p/original"
-    }
-}
+)
