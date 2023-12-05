@@ -32,13 +32,10 @@ class MovieListViewModel @Inject constructor(
                 val genres = genresInfoId.genres.associateBy({ it.id }, { it.name })
                 val movies = movieInfo.movies.map { movieMapper.parseMovieResponse(genres, it) }
 
-
                 mutableLiveData.postValue(LoadingResults.Success(movies))
             } catch (e: Exception) {
                 mutableLiveData.postValue(LoadingResults.Error(e))
             }
-
         }
     }
-
 }

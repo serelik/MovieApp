@@ -46,7 +46,6 @@ class NetworkModule {
     @Singleton
     fun provideContentType() = "application/json".toMediaType()
 
-
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton

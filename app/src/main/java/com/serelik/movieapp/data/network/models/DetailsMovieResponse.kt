@@ -28,13 +28,13 @@ data class DetailsMovieResponse(
         val sb = StringBuilder()
 
         for (i in genreList) {
-            if (genres.containsKey(i.id))
+            if (genres.containsKey(i.id)) {
                 sb.append("${genres[i.id]}, ")
+            }
         }
 
         if (sb.isNotEmpty()) {
             sb.delete(sb.length - 2, sb.length)
-
         }
         return Movie(
             id = id,
@@ -45,12 +45,11 @@ data class DetailsMovieResponse(
             name = title,
             backdropMovieDetailsImageUrl = backdropPathMovieDetailsImage?.let { "$baseImageUrl$backdropPathMovieDetailsImage" },
             backPosterMainMovieImageUrl = posterPathListMovieImage?.let { "$baseImageUrl$posterPathListMovieImage" },
-            overview = overview,
+            overview = overview
         )
     }
 
     companion object {
         private const val baseImageUrl = "https://image.tmdb.org/t/p/original"
     }
-
 }

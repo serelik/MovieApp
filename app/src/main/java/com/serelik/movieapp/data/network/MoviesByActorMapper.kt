@@ -14,5 +14,4 @@ class MoviesByActorMapper @Inject constructor(
             title = apiModel.title
         )
     }
-
 }

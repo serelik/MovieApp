@@ -41,5 +41,4 @@ class ActorDetailsViewModel @Inject constructor(
             }
         }
     }
-
 }

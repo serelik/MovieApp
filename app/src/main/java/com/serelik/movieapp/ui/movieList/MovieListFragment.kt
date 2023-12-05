@@ -27,8 +27,5 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         TabLayoutMediator(viewBinding.tabLayout, viewBinding.viewPager) { tab, position ->
             tab.text = getString(movieListTypes[position].titleRes)
         }.attach()
-
-
     }
-
 }

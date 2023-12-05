@@ -37,5 +37,4 @@ interface MovieDBApi {
     suspend fun getMoviesByActor(
         @Path(value = "actor_id") key: Int
     ): MoviesByActorListResponse
-
 }

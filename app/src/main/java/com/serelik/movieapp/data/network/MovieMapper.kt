@@ -8,8 +8,7 @@ class MovieMapper @Inject constructor(
     private val mapper: ImageMapper
 ) {
     fun parseMovieResponse(genres: Map<Int, String>, apiModel: MovieResponse): Movie {
-
-       val movieGenres = apiModel.genreIds.mapNotNull { genres[it] }.joinToString(separator = ", ")
+        val movieGenres = apiModel.genreIds.mapNotNull { genres[it] }.joinToString(separator = ", ")
 
         return Movie(
             id = apiModel.id,
@@ -20,8 +19,7 @@ class MovieMapper @Inject constructor(
             name = apiModel.title,
             backdropMovieDetailsImageUrl = mapper.createImageUrl(apiModel.backdropPathMovieDetailsImage),
             backPosterMainMovieImageUrl = mapper.createImageUrl(apiModel.posterPathListMovieImage),
-            overview = apiModel.overview,
+            overview = apiModel.overview
         )
     }
-
 }

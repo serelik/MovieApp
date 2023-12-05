@@ -15,20 +15,19 @@ class MovieItemDecorator : RecyclerView.ItemDecoration() {
         val itemCount = parent.adapter?.itemCount ?: return
         val position = parent.getChildAdapterPosition(view)
 
-        val startPadding = if (position != 0)
+        val startPadding = if (position != 0) {
             parent.resources.getDimensionPixelOffset(R.dimen.recyclerBetween) / 2
-        else
+        } else {
             parent.resources.getDimensionPixelOffset(R.dimen.startAndEnd)
+        }
 
-
-        val endPadding = if (position == itemCount - 1)
+        val endPadding = if (position == itemCount - 1) {
             parent.resources.getDimensionPixelOffset(R.dimen.startAndEnd)
-        else
+        } else {
             parent.resources.getDimensionPixelOffset(R.dimen.recyclerBetween) / 2
+        }
 
         outRect.left = startPadding
         outRect.right = endPadding
     }
-
-
 }

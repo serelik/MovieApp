@@ -42,8 +42,6 @@ class MovieDetailsViewModel @Inject constructor(
             } catch (e: Exception) {
                 mutableLiveData.postValue(LoadingResults.Error(e))
             }
-
         }
     }
-
 }

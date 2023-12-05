@@ -1,7 +1,6 @@
 package com.serelik.movieapp.ui.movieDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -67,13 +66,10 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         super.onCreate(savedInstanceState)
 
         movieInfo?.let { viewModel.getMovieAndActorInfo(it) }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         viewModel.movieInfoLiveData.observe(viewLifecycleOwner, ::setState)
 
@@ -98,7 +94,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             textViewFilmOverview.text = movieInfo.overview
             recyclerView.adapter = actorsAdapter
             imageViewBackPoster.load(movieInfo.backdropMovieDetailsImageUrl)
-
         }
     }
 
@@ -113,5 +108,4 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             return fragment
         }
     }
-
 }

@@ -1,7 +1,6 @@
 package com.serelik.movieapp.ui.movieList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -66,7 +65,6 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         viewBinding.buttonTryAgain.setOnClickListener {
             getInfo()
         }
@@ -87,5 +85,4 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
             return fragment
         }
     }
-
 }

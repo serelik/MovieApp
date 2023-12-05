@@ -11,6 +11,4 @@ data class MoviesByActorResponse(
     val posterPath: String?,
     @SerialName("title")
     val title: String
-) {
-
-}
+)

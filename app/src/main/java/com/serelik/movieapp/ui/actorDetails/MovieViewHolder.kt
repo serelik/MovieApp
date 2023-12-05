@@ -13,6 +13,5 @@ class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(movie: MovieByActor) {
         viewBinding.imageViewPoster.load(movie.posterPath, R.drawable.actor_place_holder, true)
         viewBinding.textViewTitle.text = movie.title
-
     }
 }

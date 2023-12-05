@@ -9,9 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.movieappst.ui.extensions.load
 import com.serelik.movieapp.R
 import com.serelik.movieapp.data.LoadingResults
-import com.serelik.movieapp.data.local.models.Actor
 import com.serelik.movieapp.data.local.models.ActorDetails
-import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.data.local.models.MovieByActor
 import com.serelik.movieapp.databinding.FragmentActorBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,18 +54,14 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
         viewBinding.textViewSeeAll.isVisible = isTextView
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         actorInfo?.let { viewModel.getMovieAndActorInfo(it) }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         viewModel.movieInfoLiveData.observe(viewLifecycleOwner, ::setState)
 
@@ -108,5 +102,4 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
             return fragment
         }
     }
-
 }

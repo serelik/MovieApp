@@ -1,6 +1,5 @@
 package com.serelik.movieapp.data.network
 
-import android.util.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -8,7 +7,6 @@ import javax.inject.Singleton
 class ImageMapper @Inject constructor() {
 
     fun createImageUrl(picture: String?): String? {
-        Log.d("checkaaa", "$baseImageUrl$picture")
         return picture?.let { "$baseImageUrl$picture" }
     }
 
