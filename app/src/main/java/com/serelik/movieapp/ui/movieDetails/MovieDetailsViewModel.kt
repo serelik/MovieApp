@@ -10,7 +10,6 @@ import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.data.network.ActorMapper
 import com.serelik.movieapp.data.network.DetailsMovieMapper
 import com.serelik.movieapp.data.network.MovieDBApi
-import com.serelik.movieapp.data.network.MovieMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

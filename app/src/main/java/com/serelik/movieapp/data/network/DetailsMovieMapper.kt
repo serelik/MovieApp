@@ -2,7 +2,6 @@ package com.serelik.movieapp.data.network
 
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.data.network.models.DetailsMovieResponse
-import com.serelik.movieapp.data.network.models.MovieResponse
 import javax.inject.Inject
 
 class DetailsMovieMapper @Inject constructor(

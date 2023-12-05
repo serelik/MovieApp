@@ -1,6 +1,5 @@
 package com.serelik.movieapp.data.network.models
 
-import com.serelik.movieapp.data.local.models.ActorDetails
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
