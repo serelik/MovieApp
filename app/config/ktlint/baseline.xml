@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<baseline version="1.0">
+    <file name="src/androidTest/java/com/serelik/movieapp/ExampleInstrumentedTest.kt">
+        <error line="5" column="1" source="no-wildcard-imports" />
+    </file>
+    <file name="src/main/java/com/serelik/movieapp/data/LoadingResult.kt">
+        <error line="1" column="1" source="filename" />
+    </file>
+    <file name="src/test/java/com/serelik/movieapp/ExampleUnitTest.kt">
+        <error line="3" column="1" source="no-wildcard-imports" />
+    </file>
+</baseline>
