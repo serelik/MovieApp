@@ -33,7 +33,7 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
     private fun setState(state: LoadingResults<List<Movie>>) {
         when (state) {
             is LoadingResults.Error -> {
-                setVisibility(isTryButton = true)
+                setVisibility(isFailed = true)
             }
 
             LoadingResults.Loading -> {
@@ -41,20 +41,20 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
             }
 
             is LoadingResults.Success -> {
-                setVisibility(isTextView = true)
+                setVisibility(isSucceed = true)
                 movieAdapter.submitList(state.dataInfo)
             }
         }
     }
 
     private fun setVisibility(
-        isTryButton: Boolean = false,
-        isTextView: Boolean = false,
+        isFailed: Boolean = false,
+        isSucceed: Boolean = false,
         isLoading: Boolean = false
     ) {
         viewBinding.progressBarMovieList.isVisible = isLoading
-        viewBinding.buttonTryAgain.isVisible = isTryButton
-        viewBinding.recyclerView.isVisible = isTextView
+        viewBinding.buttonTryAgain.isVisible = isFailed
+        viewBinding.recyclerView.isVisible = isSucceed
     }
 
     private fun getInfo() {

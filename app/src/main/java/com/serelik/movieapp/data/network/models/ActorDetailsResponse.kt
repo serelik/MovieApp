@@ -19,5 +19,4 @@ data class ActorDetailsResponse(
     val knownFor: String,
     @SerialName("profile_path")
     val profilePath: String?
-
 )

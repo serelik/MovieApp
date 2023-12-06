@@ -30,7 +30,7 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
     private fun setState(state: LoadingResults<Pair<ActorDetails, List<MovieByActor>>>) {
         when (state) {
             is LoadingResults.Error -> {
-                setVisibility(isTryButton = true)
+                setVisibility(isFailed = true)
             }
 
             LoadingResults.Loading -> {
@@ -39,23 +39,23 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
 
             is LoadingResults.Success -> {
                 moviesAdapter.submitList(state.dataInfo.second)
-                setVisibility(isTextView = true)
+                setVisibility(isSucceed = true)
                 setInfo(state.dataInfo.first)
             }
         }
     }
 
     private fun setVisibility(
-        isTryButton: Boolean = false,
-        isTextView: Boolean = false,
+        isFailed: Boolean = false,
+        isSucceed: Boolean = false,
         isLoading: Boolean = false
     ) {
         viewBinding.progressBarMovieList.isVisible = isLoading
-        viewBinding.buttonTryAgain.isVisible = isTryButton
-        viewBinding.recyclerView.isVisible = isTextView
-        viewBinding.textViewBiographyTitle.isVisible = isTextView
-        viewBinding.textViewFilmography.isVisible = isTextView
-        viewBinding.textViewSeeAll.isVisible = isTextView
+        viewBinding.buttonTryAgain.isVisible = isFailed
+        viewBinding.recyclerView.isVisible = isSucceed
+        viewBinding.textViewBiographyTitle.isVisible = isSucceed
+        viewBinding.textViewFilmography.isVisible = isSucceed
+        viewBinding.textViewSeeAll.isVisible = isSucceed
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
