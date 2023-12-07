@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MoviesByActorList(
+data class MoviesByActorListResponse(
     @SerialName("cast")
     val movies: List<MoviesByActorResponse>
 )

@@ -1,6 +1,5 @@
 package com.example.movieappst.ui.actor
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -10,7 +9,6 @@ import com.serelik.movieapp.data.local.models.Actor
 class ActorsAdapter(
     private val onMovieClickListener: (Actor) -> Unit
 ) : ListAdapter<Actor, ActorsViewHolder>(ActorsCallback()) {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -23,5 +21,4 @@ class ActorsAdapter(
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
 }

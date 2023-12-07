@@ -12,9 +12,11 @@ class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         return MovieViewHolder(
             inflater.inflate(
-                R.layout.item_movie, parent,
+                R.layout.item_movie,
+                parent,
                 false
-            ), onMovieClickListener
+            ),
+            onMovieClickListener
         )
     }
 

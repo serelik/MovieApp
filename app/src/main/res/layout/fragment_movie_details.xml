@@ -19,6 +19,18 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
 
+        <Button
+            android:id="@+id/buttonTryAgain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_internet_message"
+            android:layout_marginHorizontal="12dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/imageViewBackPoster"
             android:layout_width="match_parent"
@@ -50,9 +62,9 @@
             android:padding="6dp"
             android:text="@string/back"
             android:textColor="@color/gray"
+            app:drawableStartCompat="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="@+id/guideLineStart"
-            app:layout_constraintTop_toTopOf="parent"
-            app:drawableStartCompat="@drawable/ic_back" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewPG"
@@ -89,9 +101,10 @@
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginTop="4dp"
             android:progressBackgroundTint="@color/white"
             android:progressTint="@color/pink"
-            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@+id/guideLineStart"
             app:layout_constraintTop_toBottomOf="@+id/textViewGenres"
             tools:rating="4"
@@ -105,27 +118,28 @@
             android:textColor="@color/lightGray"
             android:textSize="8sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
             app:layout_constraintStart_toEndOf="@+id/ratingBar"
             app:layout_constraintTop_toTopOf="@+id/ratingBar"
-            app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
             tools:text="125 REVIEWS" />
 
         <TextView
             android:id="@+id/textViewStoryline"
             android:layout_width="wrap_content"
+            android:visibility="invisible"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/storyline"
-            android:textStyle="bold"
             android:textColor="@color/white"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/guideLineStart"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
         <TextView
             android:id="@+id/textViewFilmOverview"
             android:layout_width="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@id/guideLineStart"
             app:layout_constraintTop_toBottomOf="@+id/textViewStoryline"
             tools:text="After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe." />
@@ -135,10 +149,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:visibility="invisible"
             android:text="@string/cast"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
 
             app:layout_constraintStart_toStartOf="@id/guideLineStart"
             app:layout_constraintTop_toBottomOf="@+id/textViewFilmOverview" />
@@ -152,6 +167,12 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCast" />
+
+        <ProgressBar
+            android:id="@+id/progressBarMovieList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

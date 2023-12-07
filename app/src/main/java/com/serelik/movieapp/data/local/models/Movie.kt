@@ -1,6 +1,5 @@
 package com.serelik.movieapp.data.local.models
 
-
 data class Movie(
     val id: Int,
     val backPosterMainMovieImageUrl: String?,
@@ -10,5 +9,5 @@ data class Movie(
     val rating: Float,
     val reviews: Int,
     val overview: String,
-    val name: String,
+    val name: String
 )

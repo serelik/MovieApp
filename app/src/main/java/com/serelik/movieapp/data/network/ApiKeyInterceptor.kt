@@ -5,7 +5,6 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-
 class ApiKeyInterceptor : Interceptor {
 
     val apiKey = KeyStorage.apiKey

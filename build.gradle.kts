@@ -5,4 +5,5 @@ plugins {
     id("com.android.library") version "8.0.2" apply false
     id("com.google.dagger.hilt.android") version "2.47" apply false
     id("org.jetbrains.kotlin.plugin.serialization") version "1.4.21" apply false
+    id ("org.jlleitschuh.gradle.ktlint") version "11.5.0"
 }

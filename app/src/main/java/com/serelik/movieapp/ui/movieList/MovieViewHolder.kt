@@ -26,5 +26,4 @@ class MovieViewHolder(view: View, val onMovieClick: (Movie) -> Unit) :
             }
         }
     }
-
 }
