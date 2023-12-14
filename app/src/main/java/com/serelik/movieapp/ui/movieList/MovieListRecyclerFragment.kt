@@ -7,8 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
-import com.serelik.movieapp.data.LoadingResults
-import com.serelik.movieapp.data.local.models.Movie
+import com.serelik.movieapp.data.local.models.MovieListSpecific
 import com.serelik.movieapp.databinding.FragmentRecyclerBinding
 import com.serelik.movieapp.ui.movieDetails.MovieDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +19,10 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
 
     private val viewBinding by viewBinding(FragmentRecyclerBinding::bind)
 
-    val currentList by lazy { arguments?.getString(listKey) }
+    private val currentList: MovieListSpecific by lazy {
+        arguments?.getString(listKey)?.let { MovieListSpecific.valueOf(it) }
+            ?: MovieListSpecific.POPULAR
+    }
 
     val movieAdapter = MovieAdapter() {
         val supportFragmentManager = requireActivity().supportFragmentManager
@@ -30,7 +32,7 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
             .commit()
     }
 
-    private fun setState(state: LoadingResults<List<Movie>>) {
+   /* private fun setState(state: LoadingResults<List<Movie>>) {
         when (state) {
             is LoadingResults.Error -> {
                 setVisibility(isFailed = true)
@@ -42,10 +44,11 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
 
             is LoadingResults.Success -> {
                 setVisibility(isSucceed = true)
-                movieAdapter.submitList(state.dataInfo)
+
+                movieAdapter.submitData(viewLifecycleOwner.lifecycle, state.dataInfo)
             }
         }
-    }
+    }*/
 
     private fun setVisibility(
         isFailed: Boolean = false,
@@ -58,7 +61,7 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
     }
 
     private fun getInfo() {
-        currentList?.let { viewModel.getMovieInfo(it) }
+        /*currentList.let { viewModel.getMovies(it) }*/
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +76,11 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
             getInfo()
         }
 
-        viewModel.movieInfoLiveData.observe(viewLifecycleOwner, ::setState)
+        /*viewModel.movieInfoLiveData.observe(viewLifecycleOwner, ::setState)*/
+
+        viewModel.getMovies(currentList).observe(viewLifecycleOwner) {
+            movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
 
         viewBinding.recyclerView.adapter = movieAdapter
     }
@@ -81,9 +88,9 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
     companion object {
         const val listKey = "current list"
 
-        fun createFragment(listName: String): MovieListRecyclerFragment {
+        fun createFragment(movieListType: MovieListSpecific): MovieListRecyclerFragment {
             val arg = Bundle()
-            arg.putString(listKey, listName)
+            arg.putString(listKey, movieListType.name)
             val fragment = MovieListRecyclerFragment()
             fragment.arguments = arg
             return fragment

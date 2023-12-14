@@ -17,6 +17,6 @@ class ViewPagerAdapter(fragManager: FragmentManager, lifecycle: Lifecycle) :
 
     override fun createFragment(position: Int): Fragment {
         val type = moviesList[position]
-        return MovieListRecyclerFragment.createFragment(type.remotePath)
+        return MovieListRecyclerFragment.createFragment(type)
     }
 }

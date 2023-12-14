@@ -7,13 +7,11 @@ import javax.inject.Inject
 class DetailsMovieMapper @Inject constructor(
     private val mapper: ImageMapper
 ) {
-    fun parseDetailsMovieResponse(genres: Map<Int, String>, apiModel: DetailsMovieResponse): Movie {
-        val movieGenres = apiModel.genreList.mapNotNull { genres[it.id] }.joinToString(separator = ", ")
-
+    fun parseDetailsMovieResponse(apiModel: DetailsMovieResponse): Movie {
         return Movie(
             id = apiModel.id,
             pg = if (apiModel.adult) "18+" else "13+",
-            genres = movieGenres,
+            genres = apiModel.genreList.joinToString { it.name },
             rating = apiModel.voteAverage / 2.0f,
             reviews = apiModel.voteCount,
             name = apiModel.title,
