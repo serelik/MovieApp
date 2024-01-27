@@ -20,6 +20,10 @@ class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
         )
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return R.layout.item_movie
+    }
+
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) } // nullable?
     }

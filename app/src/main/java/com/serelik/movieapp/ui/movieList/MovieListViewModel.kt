@@ -45,7 +45,7 @@ class MovieListViewModel @Inject constructor(
     }*/
 
     fun getMovies(movieListType: MovieListSpecific): LiveData<PagingData<Movie>> = Pager(
-        config = PagingConfig(pageSize = 10, maxSize = 200),
+        config = PagingConfig(pageSize = 10, maxSize = 40),
         pagingSourceFactory = {
             MoviePagingSource(
                 movieApiService,
