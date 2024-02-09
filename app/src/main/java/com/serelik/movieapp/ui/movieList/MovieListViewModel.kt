@@ -22,28 +22,6 @@ class MovieListViewModel @Inject constructor(
     private val genresStorage: GenresStorage
 ) : ViewModel() {
 
-    /*private val mutableLiveData = MutableLiveData<LoadingResults<List<Movie>>>() //PagingLi
-
-    val movieInfoLiveData: LiveData<LoadingResults<List<Movie>>> = mutableLiveData*/
-
-    /* fun getMovieInfo(specific: String) {
-         viewModelScope.launch {
-             try {
-                 mutableLiveData.postValue(LoadingResults.Loading)
-
-                 *//* val genresInfoId = movieApiService.getGenresId()
-                 val movieInfo = movieApiService.getMoviesList(specific)*//*
-
-                *//*  val genres = genresInfoId.genres.associateBy({ it.id }, { it.name })
-                  val movies = movieInfo.movies.map { movieMapper.parseMovieResponse(genres, it) }*//*
-
-                mutableLiveData.postValue(LoadingResults.Success(movies))
-            } catch (e: Exception) {
-                mutableLiveData.postValue(LoadingResults.Error(e))
-            }
-        }
-    }*/
-
     fun getMovies(movieListType: MovieListSpecific): LiveData<PagingData<Movie>> = Pager(
         config = PagingConfig(pageSize = 10, maxSize = 40),
         pagingSourceFactory = {

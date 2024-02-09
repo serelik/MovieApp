@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
-        android:visibility="gone"
         android:text="@string/no_internet_message"
+        android:visibility="gone"
 
         />
 
@@ -26,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="14dp"
-
         android:clipToPadding="false"
+        app:spanCount="@integer/RecyclerSpan"
         android:paddingBottom="12dp"
-         />
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 </LinearLayout>

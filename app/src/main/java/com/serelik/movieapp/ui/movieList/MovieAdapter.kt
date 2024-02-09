@@ -25,6 +25,6 @@ class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) } // nullable?
+        getItem(position)?.let { holder.bind(it) }
     }
 }
