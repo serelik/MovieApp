@@ -14,7 +14,7 @@ data class ActorDetailsResponse(
     @SerialName("birthday")
     val birthday: String?,
     @SerialName("place_of_birth")
-    val birthPlace: String,
+    val birthPlace: String?,
     @SerialName("known_for_department")
     val knownFor: String,
     @SerialName("profile_path")
