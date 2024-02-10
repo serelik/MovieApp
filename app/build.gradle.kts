@@ -82,6 +82,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.47")
 
     implementation("com.github.bumptech.glide:glide:4.15.1")
+
+    // pagination impl
+    implementation("androidx.paging:paging-runtime:3.2.1")
 }
 
 kapt {

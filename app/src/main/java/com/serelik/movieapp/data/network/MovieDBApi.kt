@@ -8,6 +8,7 @@ import com.serelik.movieapp.data.network.models.MovieListResponse
 import com.serelik.movieapp.data.network.models.MoviesByActorListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieDBApi {
     @GET("genre/movie/list")
@@ -15,7 +16,8 @@ interface MovieDBApi {
 
     @GET("movie/{specific}")
     suspend fun getMoviesList(
-        @Path(value = "specific") key: String
+        @Path(value = "specific") key: String,
+        @Query("page") page: Int
     ): MovieListResponse
 
     @GET("movie/{movie_id}")

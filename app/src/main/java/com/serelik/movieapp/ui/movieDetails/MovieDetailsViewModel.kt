@@ -29,7 +29,6 @@ class MovieDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 mutableLiveData.postValue(LoadingResults.Loading)
-                val genresInfoId = movieApiService.getGenresId()
                 val movieInfo = movieApiService.getMovie(id)
                 val actorInfoResponse = movieApiService.getCredits(id)
 
@@ -37,8 +36,7 @@ class MovieDetailsViewModel @Inject constructor(
                     actorMapper.parseActorResponse(it)
                 }
 
-                val genres = genresInfoId.genres.associateBy({ it.id }, { it.name })
-                val movie = movieMapper.parseDetailsMovieResponse(genres, movieInfo)
+                val movie = movieMapper.parseDetailsMovieResponse(movieInfo)
 
                 mutableLiveData.postValue(LoadingResults.Success(Pair(movie, actors)))
             } catch (e: Exception) {

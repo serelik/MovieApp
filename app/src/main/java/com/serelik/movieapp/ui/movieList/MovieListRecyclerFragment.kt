@@ -5,13 +5,19 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
-import com.serelik.movieapp.data.LoadingResults
-import com.serelik.movieapp.data.local.models.Movie
+import com.serelik.movieapp.data.local.models.MovieListSpecific
 import com.serelik.movieapp.databinding.FragmentRecyclerBinding
 import com.serelik.movieapp.ui.movieDetails.MovieDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
@@ -20,7 +26,10 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
 
     private val viewBinding by viewBinding(FragmentRecyclerBinding::bind)
 
-    val currentList by lazy { arguments?.getString(listKey) }
+    private val currentList: MovieListSpecific by lazy {
+        arguments?.getString(listKey)?.let { MovieListSpecific.valueOf(it) }
+            ?: MovieListSpecific.POPULAR
+    }
 
     val movieAdapter = MovieAdapter() {
         val supportFragmentManager = requireActivity().supportFragmentManager
@@ -30,60 +39,68 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
             .commit()
     }
 
-    private fun setState(state: LoadingResults<List<Movie>>) {
-        when (state) {
-            is LoadingResults.Error -> {
-                setVisibility(isFailed = true)
-            }
+    val movieErrorLoadAdapter = MovieErrorLoadAdapter() {
+        movieAdapter.retry()
+    }
 
-            LoadingResults.Loading -> {
-                setVisibility(isLoading = true)
-            }
-
-            is LoadingResults.Success -> {
-                setVisibility(isSucceed = true)
-                movieAdapter.submitList(state.dataInfo)
-            }
+    private fun bindMovieList() {
+        viewModel.getMovies(currentList).observe(viewLifecycleOwner) {
+            movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
-    }
-
-    private fun setVisibility(
-        isFailed: Boolean = false,
-        isSucceed: Boolean = false,
-        isLoading: Boolean = false
-    ) {
-        viewBinding.progressBarMovieList.isVisible = isLoading
-        viewBinding.buttonTryAgain.isVisible = isFailed
-        viewBinding.recyclerView.isVisible = isSucceed
-    }
-
-    private fun getInfo() {
-        currentList?.let { viewModel.getMovieInfo(it) }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        getInfo()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.buttonTryAgain.setOnClickListener {
-            getInfo()
+            bindMovieList()
         }
 
-        viewModel.movieInfoLiveData.observe(viewLifecycleOwner, ::setState)
+        bindMovieList()
 
-        viewBinding.recyclerView.adapter = movieAdapter
+        lifecycleScope.launch {
+            bindState()
+        }
+
+        val config = ConcatAdapter.Config.Builder().setIsolateViewTypes(false).build()
+        viewBinding.recyclerView.adapter =
+            ConcatAdapter(config, movieAdapter, movieErrorLoadAdapter)
+
+        (viewBinding.recyclerView.layoutManager as GridLayoutManager).spanSizeLookup =
+            getSpanSizeLookup()
+    }
+
+    private suspend fun bindState() {
+        movieAdapter.loadStateFlow.collectLatest {
+            viewBinding.progressBarMovieList.isVisible =
+                (it.refresh is LoadState.Loading)
+            viewBinding.buttonTryAgain.isVisible =
+                (it.refresh is LoadState.Error)
+
+            movieErrorLoadAdapter.loadState = it.append
+        }
+    }
+
+    fun getSpanSizeLookup(): GridLayoutManager.SpanSizeLookup {
+        return object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val viewType =
+                    viewBinding.recyclerView.adapter?.getItemViewType(position)
+                return when (viewType) {
+                    R.layout.item_movie -> 1
+                    R.layout.item_error_load -> resources.getInteger(R.integer.RecyclerSpan)
+                    else -> 1
+                }
+            }
+        }
     }
 
     companion object {
         const val listKey = "current list"
 
-        fun createFragment(listName: String): MovieListRecyclerFragment {
+        fun createFragment(movieListType: MovieListSpecific): MovieListRecyclerFragment {
             val arg = Bundle()
-            arg.putString(listKey, listName)
+            arg.putString(listKey, movieListType.name)
             val fragment = MovieListRecyclerFragment()
             fragment.arguments = arg
             return fragment
