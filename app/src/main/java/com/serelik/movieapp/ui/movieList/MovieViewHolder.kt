@@ -7,7 +7,11 @@ import com.example.movieappst.ui.extensions.load
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.databinding.ItemMovieBinding
 
-class MovieViewHolder(view: View, val onMovieClick: (Movie) -> Unit) :
+class MovieViewHolder(
+    view: View, private val onMovieClick: (Movie) -> Unit,
+    private val isFavoriteMovie: (movieId: Int) -> Boolean,
+    private val onFavoriteClick: (movieId: Int) -> Unit
+) :
     RecyclerView.ViewHolder(view) {
 
     private val viewBinding by viewBinding(ItemMovieBinding::bind)
@@ -23,6 +27,15 @@ class MovieViewHolder(view: View, val onMovieClick: (Movie) -> Unit) :
 
             imageViewPoster.setOnClickListener {
                 onMovieClick.invoke(movie)
+            }
+
+            val isFavoriteMovie = isFavoriteMovie(movie.id)
+
+            imageViewFavorite.isSelected = isFavoriteMovie
+
+            imageViewFavorite.setOnClickListener {
+                onFavoriteClick(movie.id)
+                imageViewFavorite.isSelected = !imageViewFavorite.isSelected
             }
         }
     }

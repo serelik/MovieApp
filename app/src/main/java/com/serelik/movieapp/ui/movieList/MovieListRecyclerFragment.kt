@@ -31,12 +31,17 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
             ?: MovieListSpecific.POPULAR
     }
 
-    val movieAdapter = MovieAdapter() {
-        val supportFragmentManager = requireActivity().supportFragmentManager
-        supportFragmentManager.beginTransaction()
-            .replace(android.R.id.content, MovieDetailsFragment.createFragment(it.id))
-            .addToBackStack("Movie details")
-            .commit()
+    val movieAdapter by lazy {
+        MovieAdapter(
+            onMovieClickListener = { movie ->
+
+                val supportFragmentManager = requireActivity().supportFragmentManager
+                supportFragmentManager.beginTransaction()
+                    .replace(android.R.id.content, MovieDetailsFragment.createFragment(movie.id))
+                    .addToBackStack("Movie details")
+                    .commit()
+            }, onFavoriteClick = viewModel::onFavoriteClick, isFavoriteMovie = viewModel::isFavorite
+        )
     }
 
     val movieErrorLoadAdapter = MovieErrorLoadAdapter() {
@@ -68,6 +73,7 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
 
         (viewBinding.recyclerView.layoutManager as GridLayoutManager).spanSizeLookup =
             getSpanSizeLookup()
+
     }
 
     private suspend fun bindState() {
