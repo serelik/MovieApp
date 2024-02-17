@@ -6,7 +6,11 @@ import androidx.paging.PagingDataAdapter
 import com.serelik.movieapp.R
 import com.serelik.movieapp.data.local.models.Movie
 
-class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
+class MovieAdapter(
+    private val onMovieClickListener: (Movie) -> Unit,
+    private val isFavoriteMovie: (movieId: Int) -> Boolean,
+    private val onFavoriteClick: (movieId: Int) -> Unit
+) :
     PagingDataAdapter<Movie, MovieViewHolder>(MovieCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -16,7 +20,9 @@ class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
                 parent,
                 false
             ),
-            onMovieClickListener
+            onMovieClickListener,
+            isFavoriteMovie,
+            onFavoriteClick
         )
     }
 
