@@ -52,7 +52,7 @@ class MovieListViewModel @Inject constructor(
     fun onFavoriteClick(movie: Movie) {
         if (isFavorite(movie.id)) {
             dataBase.favoriteDao().deleteById(movie.id)
-        } else
+        } else {
             dataBase.favoriteDao().insert(
                 Favorite(
                     id = movie.id,
@@ -65,6 +65,7 @@ class MovieListViewModel @Inject constructor(
                     name = movie.name
                 )
             )
+        }
     }
 
     fun getMovies(movieListType: MovieListSpecific): LiveData<PagingData<Movie>> = Pager(

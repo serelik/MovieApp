@@ -30,10 +30,8 @@ class ActorDetailsViewModel @Inject constructor(
         mutableLiveData
 
     fun getMovieAndActorInfo(id: Int) {
-
         val moviesResponseAsync = viewModelScope.async { movieApiService.getMoviesByActor(id) }
         val actorInfoResponseAsync = viewModelScope.async { movieApiService.getActor(id) }
-
 
         viewModelScope.launch {
             try {
@@ -55,5 +53,4 @@ class ActorDetailsViewModel @Inject constructor(
             }
         }
     }
-
 }

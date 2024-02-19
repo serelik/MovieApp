@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
-import com.serelik.movieapp.data.local.models.MovieListSpecific
 import com.serelik.movieapp.databinding.FragmentFavoriteListBinding
-import com.serelik.movieapp.databinding.FragmentRecyclerBinding
 import com.serelik.movieapp.ui.movieDetails.MovieDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +26,8 @@ class FavoriteListFragment : Fragment(R.layout.fragment_favorite_list) {
                     .replace(android.R.id.content, MovieDetailsFragment.createFragment(movie.id))
                     .addToBackStack("Movie details")
                     .commit()
-            }, onFavoriteClick = viewModel::onFavoriteClick
+            },
+            onFavoriteClick = viewModel::onFavoriteClick
         )
     }
 

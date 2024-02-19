@@ -8,7 +8,8 @@ import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.databinding.ItemMovieBinding
 
 class MovieViewHolder(
-    view: View, private val onMovieClick: (Movie) -> Unit,
+    view: View,
+    private val onMovieClick: (Movie) -> Unit,
     private val isFavoriteMovie: (movieId: Int) -> Boolean,
     private val onFavoriteClick: (movie: Movie) -> Unit
 ) :

@@ -2,11 +2,9 @@ package com.serelik.movieapp.ui.favoriteList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.ListAdapter
 import com.serelik.movieapp.R
 import com.serelik.movieapp.data.local.models.Favorite
-import com.serelik.movieapp.data.local.models.Movie
 
 class FavoriteMovieAdapter(
     private val onMovieClickListener: (Favorite) -> Unit,

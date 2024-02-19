@@ -39,7 +39,9 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
                     .replace(android.R.id.content, MovieDetailsFragment.createFragment(movie.id))
                     .addToBackStack("Movie details")
                     .commit()
-            }, onFavoriteClick = viewModel::onFavoriteClick, isFavoriteMovie = viewModel::isFavorite
+            },
+            onFavoriteClick = viewModel::onFavoriteClick,
+            isFavoriteMovie = viewModel::isFavorite
         )
     }
 
@@ -72,7 +74,6 @@ class MovieListRecyclerFragment : Fragment(R.layout.fragment_recycler) {
 
         (viewBinding.recyclerView.layoutManager as GridLayoutManager).spanSizeLookup =
             getSpanSizeLookup()
-
     }
 
     private suspend fun bindState() {

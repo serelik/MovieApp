@@ -5,12 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.movieappst.ui.extensions.load
 import com.serelik.movieapp.data.local.models.Favorite
-import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.databinding.ItemFavoriteMovieBinding
-import com.serelik.movieapp.databinding.ItemMovieBinding
 
 class FavoriteMovieViewHolder(
-    view: View, private val onMovieClick: (Favorite) -> Unit,
+    view: View,
+    private val onMovieClick: (Favorite) -> Unit,
     private val onFavoriteClick: (movieId: Int) -> Unit
 ) :
     RecyclerView.ViewHolder(view) {
