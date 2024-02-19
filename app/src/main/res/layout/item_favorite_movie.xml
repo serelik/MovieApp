@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/mainBG"
+    app:cardCornerRadius="8dp"
+    android:layout_marginVertical="6dp"
+    app:strokeColor="@color/borderColor"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainBG">
+
+        <ImageView
+            android:id="@+id/imageViewPoster"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintEnd_toStartOf="@+id/textviewMovieName"
+            tools:background="@drawable/movie" />
+
+        <TextView
+            android:id="@+id/textviewMovieName"
+            android:layout_width="0dp"
+            tools:text="Tenet"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPoster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="12dp"
+            />
+
+        <TextView
+            android:id="@+id/textviewMovieDescription"
+            android:layout_width="0dp"
+            android:layout_marginTop="16dp"
+            tools:text="The main character is a secret agent who passes a cruel test of reliability and joins an incredible mission. The fate of the world depends on its implementation, and for success it is necessary to discard all previous ideas about space and time."
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/textviewMovieName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textviewMovieName"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/gradient"
+            app:layout_constraintBottom_toBottomOf="@id/imageViewPoster"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewPoster"
+            app:layout_constraintStart_toStartOf="@+id/imageViewPoster"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPoster"
+            />
+
+        <TextView
+            android:id="@+id/textViewPg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/pg_bg"
+            android:padding="4dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/imageViewPoster"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPoster"
+            tools:text="13+" />
+
+        <ImageView
+            android:id="@+id/imageViewFavorite"
+            android:backgroundTint="#00FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/imageViewPoster"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewPoster"
+            android:src="@drawable/selector_ic_like"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:layout_marginEnd="6dp"
+            />
+
+        <TextView
+            android:id="@+id/textViewGenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="22dp"
+            android:textColor="@color/pink"
+
+            android:textSize="8sp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPoster"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Action, Adventure, Drama" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="4dp"
+            android:progressBackgroundTint="@color/white"
+            android:progressTint="@color/pink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGenres"
+            tools:rating="4"
+            tools:text="Action, Adventure, Drama" />
+
+        <TextView
+            android:id="@+id/textViewReviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:lineHeight="12sp"
+            android:textColor="@color/lightGray"
+            android:textSize="8sp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+            app:layout_constraintStart_toEndOf="@id/ratingBar"
+            app:layout_constraintTop_toTopOf="@id/ratingBar"
+            tools:text="125 REVIEWS" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

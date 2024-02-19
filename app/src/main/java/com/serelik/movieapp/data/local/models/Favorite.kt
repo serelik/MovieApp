@@ -8,5 +8,12 @@ import androidx.room.PrimaryKey
 data class Favorite(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
-    val id: Int
+    val id: Int,
+    val backPosterMainMovieImageUrl: String?,
+    val pg: String,
+    val genres: String,
+    val rating: Float,
+    val reviews: Int,
+    val overview: String,
+    val name: String
 )

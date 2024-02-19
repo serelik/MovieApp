@@ -1,40 +1,40 @@
-package com.serelik.movieapp.ui.movieList
+package com.serelik.movieapp.ui.favoriteList
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.movieappst.ui.extensions.load
+import com.serelik.movieapp.data.local.models.Favorite
 import com.serelik.movieapp.data.local.models.Movie
+import com.serelik.movieapp.databinding.ItemFavoriteMovieBinding
 import com.serelik.movieapp.databinding.ItemMovieBinding
 
-class MovieViewHolder(
-    view: View, private val onMovieClick: (Movie) -> Unit,
-    private val isFavoriteMovie: (movieId: Int) -> Boolean,
-    private val onFavoriteClick: (movie: Movie) -> Unit
+class FavoriteMovieViewHolder(
+    view: View, private val onMovieClick: (Favorite) -> Unit,
+    private val onFavoriteClick: (movieId: Int) -> Unit
 ) :
     RecyclerView.ViewHolder(view) {
 
-    private val viewBinding by viewBinding(ItemMovieBinding::bind)
+    private val viewBinding by viewBinding(ItemFavoriteMovieBinding::bind)
 
-    fun bind(movie: Movie) {
+    fun bind(movie: Favorite) {
         viewBinding.apply {
             imageViewPoster.load(movie.backPosterMainMovieImageUrl)
             textViewGenres.text = movie.genres
             ratingBar.rating = movie.rating
             textViewPg.text = movie.pg
-            textViewTitle.text = movie.name
+            textviewMovieName.text = movie.name
             textViewReviews.text = "${movie.reviews} Reviews"
+            textviewMovieDescription.text = movie.overview
 
             imageViewPoster.setOnClickListener {
                 onMovieClick.invoke(movie)
             }
 
-            val isFavoriteMovie = isFavoriteMovie(movie.id)
-
-            imageViewFavorite.isSelected = isFavoriteMovie
+            imageViewFavorite.isSelected = true
 
             imageViewFavorite.setOnClickListener {
-                onFavoriteClick(movie)
+                onFavoriteClick(movie.id)
                 imageViewFavorite.isSelected = !imageViewFavorite.isSelected
             }
         }

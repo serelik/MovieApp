@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieList
+package com.serelik.movieapp.ui.favoriteList
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -23,10 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(
-    private val movieApiService: MovieDBApi,
-    private val movieMapper: MovieMapper,
-    private val genresStorage: GenresStorage,
+class FavoriteListViewModel @Inject constructor(
     @ApplicationContext context: Context
 ) : ViewModel() {
 
@@ -36,7 +33,7 @@ class MovieListViewModel @Inject constructor(
 
     val favoritesInfoLiveData: LiveData<List<Favorite>> = favoritesMutableLiveData
 
-    init {
+    fun getFavoriteMovies() {
         viewModelScope.launch {
             dataBase.favoriteDao().getAll().collect { it ->
                 favoritesMutableLiveData.postValue(it)
@@ -44,38 +41,9 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-    fun isFavorite(movieId: Int): Boolean {
-        val isFavoriteSet = favoritesInfoLiveData.value.orEmpty().map { it.id }
-        return isFavoriteSet.contains(movieId)
+    fun onFavoriteClick(movieId: Int) {
+            dataBase.favoriteDao().deleteById(movieId)
     }
 
-    fun onFavoriteClick(movie: Movie) {
-        if (isFavorite(movie.id)) {
-            dataBase.favoriteDao().deleteById(movie.id)
-        } else
-            dataBase.favoriteDao().insert(
-                Favorite(
-                    id = movie.id,
-                    backPosterMainMovieImageUrl = movie.backPosterMainMovieImageUrl,
-                    pg = movie.pg,
-                    genres = movie.genres,
-                    rating = movie.rating,
-                    reviews = movie.reviews,
-                    overview = movie.overview,
-                    name = movie.name
-                )
-            )
-    }
 
-    fun getMovies(movieListType: MovieListSpecific): LiveData<PagingData<Movie>> = Pager(
-        config = PagingConfig(pageSize = 10, maxSize = 40),
-        pagingSourceFactory = {
-            MoviePagingSource(
-                movieApiService,
-                movieMapper,
-                movieListType,
-                genresStorage
-            )
-        }
-    ).liveData
 }
