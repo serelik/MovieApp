@@ -14,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="12dp"
         android:background="@color/mainBG">
 
         <ImageView
@@ -30,6 +31,8 @@
             android:id="@+id/textviewMovieName"
             android:layout_width="0dp"
             tools:text="Tenet"
+            android:textAppearance="@style/TitleText"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@+id/imageViewPoster"
@@ -45,6 +48,8 @@
             tools:text="The main character is a secret agent who passes a cruel test of reliability and joins an incredible mission. The fate of the world depends on its implementation, and for success it is necessary to discard all previous ideas about space and time."
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:textSize="8sp"
+            android:paddingEnd="12dp"
             app:layout_constraintStart_toStartOf="@+id/textviewMovieName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textviewMovieName"

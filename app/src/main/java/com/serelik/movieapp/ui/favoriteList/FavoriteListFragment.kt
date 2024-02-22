@@ -5,10 +5,11 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
 import com.serelik.movieapp.databinding.FragmentFavoriteListBinding
-import com.serelik.movieapp.ui.movieDetails.MovieDetailsFragment
+import com.serelik.movieapp.ui.movieList.MovieListFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,14 +19,10 @@ class FavoriteListFragment : Fragment(R.layout.fragment_favorite_list) {
 
     private val viewBinding by viewBinding(FragmentFavoriteListBinding::bind)
 
-    val favoriteMovieAdapter by lazy {
+    private val favoriteMovieAdapter by lazy {
         FavoriteMovieAdapter(
             onMovieClickListener = { movie ->
-                val supportFragmentManager = requireActivity().supportFragmentManager
-                supportFragmentManager.beginTransaction()
-                    .replace(android.R.id.content, MovieDetailsFragment.createFragment(movie.id))
-                    .addToBackStack("Movie details")
-                    .commit()
+                onMovieClick(movie.id)
             },
             onFavoriteClick = viewModel::onFavoriteClick
         )
@@ -46,5 +43,14 @@ class FavoriteListFragment : Fragment(R.layout.fragment_favorite_list) {
         viewModel.getFavoriteMovies()
 
         bindMovieList()
+    }
+
+    private fun onMovieClick(movieId: Int) {
+        val controller = findNavController()
+        controller.navigate(
+            MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(
+                movieId
+            )
+        )
     }
 }

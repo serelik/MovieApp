@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.movieappst.ui.extensions.load
 import com.serelik.movieapp.R
@@ -19,13 +20,15 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
 
     private val viewModel: ActorDetailsViewModel by viewModels()
 
-    val actorInfo by lazy { arguments?.getInt(movieKey) }
+    private val args: ActorDetailsFragmentArgs by navArgs()
+
+    private val actorId by lazy { args.actorId }
 
     private val viewBinding by viewBinding(FragmentActorBinding::bind)
 
-    val supportFragmentManager by lazy { requireActivity().supportFragmentManager }
+    private val supportFragmentManager by lazy { requireActivity().supportFragmentManager }
 
-    val moviesAdapter = MovieAdapter()
+    private val moviesAdapter = MovieAdapter()
 
     private fun setState(state: LoadingResults<Pair<ActorDetails, List<MovieByActor>>>) {
         when (state) {
@@ -61,7 +64,7 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        actorInfo?.let { viewModel.getMovieAndActorInfo(it) }
+        actorId.let { viewModel.getMovieAndActorInfo(it) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,7 +76,7 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
         viewBinding.recyclerView.addItemDecoration(MovieItemDecorator())
 
         viewBinding.buttonTryAgain.setOnClickListener {
-            actorInfo?.let { viewModel.getMovieAndActorInfo(it) }
+            actorId.let { viewModel.getMovieAndActorInfo(it) }
         }
 
         viewBinding.textViewButtonBack.setOnClickListener {
@@ -81,7 +84,7 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
         }
     }
 
-    fun setInfo(actorInfo: ActorDetails) {
+    private fun setInfo(actorInfo: ActorDetails) {
         viewBinding.apply {
             textViewActorName.text = actorInfo.actorName
             textViewBiography.text = actorInfo.biography
@@ -92,18 +95,6 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
                 placeHolder = R.drawable.actor_place_holder
             )
             textViewKnownFor.text = actorInfo.knownFor
-        }
-    }
-
-    companion object {
-        const val movieKey = "Actor_details"
-
-        fun createFragment(id: Int): ActorDetailsFragment {
-            val arg = Bundle()
-            arg.putInt(movieKey, id)
-            val fragment = ActorDetailsFragment()
-            fragment.arguments = arg
-            return fragment
         }
     }
 }
