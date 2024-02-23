@@ -28,8 +28,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private val movieId by lazy { args.movieId }
 
-    private val supportFragmentManager by lazy { requireActivity().supportFragmentManager }
-
     private val actorsAdapter = ActorsAdapter {
         onActorClick(it.id)
     }
@@ -79,7 +77,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         viewBinding.recyclerView.adapter = actorsAdapter
 
         viewBinding.textViewButtonBack.setOnClickListener {
-            supportFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
 
         viewBinding.buttonTryAgain.setOnClickListener {
@@ -101,8 +99,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     }
 
     private fun onActorClick(actorId: Int) {
-        val controller = findNavController()
-        controller.navigate(
+        findNavController().navigate(
             MovieDetailsFragmentDirections.actionMovieDetailsFragmentToActorDetailsFragment(
                 actorId
             )

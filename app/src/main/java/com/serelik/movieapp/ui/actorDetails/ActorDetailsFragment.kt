@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.movieappst.ui.extensions.load
@@ -25,8 +26,6 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
     private val actorId by lazy { args.actorId }
 
     private val viewBinding by viewBinding(FragmentActorBinding::bind)
-
-    private val supportFragmentManager by lazy { requireActivity().supportFragmentManager }
 
     private val moviesAdapter = MovieAdapter()
 
@@ -80,7 +79,7 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
         }
 
         viewBinding.textViewButtonBack.setOnClickListener {
-            supportFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
     }
 
