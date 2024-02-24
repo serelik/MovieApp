@@ -9,7 +9,7 @@ import com.serelik.movieapp.data.local.models.Movie
 class MovieAdapter(
     private val onMovieClickListener: (Movie) -> Unit,
     private val isFavoriteMovie: (movieId: Int) -> Boolean,
-    private val onFavoriteClick: (movieId: Int) -> Unit
+    private val onFavoriteClick: (movie: Movie) -> Unit
 ) :
     PagingDataAdapter<Movie, MovieViewHolder>(MovieCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {

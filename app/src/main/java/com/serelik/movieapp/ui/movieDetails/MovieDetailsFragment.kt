@@ -5,6 +5,8 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.movieappst.ui.actor.ActorsAdapter
 import com.example.movieappst.ui.extensions.load
@@ -13,7 +15,6 @@ import com.serelik.movieapp.data.LoadingResults
 import com.serelik.movieapp.data.local.models.Actor
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.databinding.FragmentMovieDetailsBinding
-import com.serelik.movieapp.ui.actorDetails.ActorDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,18 +22,14 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private val viewModel: MovieDetailsViewModel by viewModels()
 
-    val movieInfo by lazy { arguments?.getInt(movieKey) }
+    private val args: MovieDetailsFragmentArgs by navArgs()
 
     private val viewBinding by viewBinding(FragmentMovieDetailsBinding::bind)
 
-    val supportFragmentManager by lazy { requireActivity().supportFragmentManager }
+    private val movieId by lazy { args.movieId }
 
-    val actorsAdapter = ActorsAdapter {
-        val supportFragmentManager = requireActivity().supportFragmentManager
-        supportFragmentManager.beginTransaction()
-            .replace(android.R.id.content, ActorDetailsFragment.createFragment(it.id))
-            .addToBackStack("Actor details")
-            .commit()
+    private val actorsAdapter = ActorsAdapter {
+        onActorClick(it.id)
     }
 
     private fun setState(state: LoadingResults<Pair<Movie, List<Actor>>>) {
@@ -69,7 +66,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        movieInfo?.let { viewModel.getMovieAndActorInfo(it) }
+        movieId.let { viewModel.getMovieAndActorInfo(it) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,15 +77,15 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         viewBinding.recyclerView.adapter = actorsAdapter
 
         viewBinding.textViewButtonBack.setOnClickListener {
-            supportFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
 
         viewBinding.buttonTryAgain.setOnClickListener {
-            movieInfo?.let { viewModel.getMovieAndActorInfo(it) }
+            movieId.let { viewModel.getMovieAndActorInfo(it) }
         }
     }
 
-    fun setInfo(movieInfo: Movie) {
+    private fun setInfo(movieInfo: Movie) {
         viewBinding.apply {
             textViewPG.text = movieInfo.pg
             textViewMovieName.text = movieInfo.name
@@ -101,15 +98,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
     }
 
-    companion object {
-        const val movieKey = "Movie_info"
-
-        fun createFragment(id: Int): MovieDetailsFragment {
-            val arg = Bundle()
-            arg.putInt(movieKey, id)
-            val fragment = MovieDetailsFragment()
-            fragment.arguments = arg
-            return fragment
-        }
+    private fun onActorClick(actorId: Int) {
+        findNavController().navigate(
+            MovieDetailsFragmentDirections.actionMovieDetailsFragmentToActorDetailsFragment(
+                actorId
+            )
+        )
     }
 }

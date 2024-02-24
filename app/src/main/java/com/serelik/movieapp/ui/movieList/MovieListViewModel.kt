@@ -1,6 +1,5 @@
 package com.serelik.movieapp.ui.movieList
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,28 +32,40 @@ class MovieListViewModel @Inject constructor(
 
     private val dataBase = FavoritesDataBase.createDataBase(context)
 
-    private val favoritesMutableLiveData = MutableLiveData<Set<Int>>()
+    private val favoritesMutableLiveData = MutableLiveData<List<Favorite>>()
 
-    val favoritesInfoLiveData: LiveData<Set<Int>> = favoritesMutableLiveData
+    val favoritesInfoLiveData: LiveData<List<Favorite>> = favoritesMutableLiveData
 
     init {
         viewModelScope.launch {
             dataBase.favoriteDao().getAll().collect { it ->
-                favoritesMutableLiveData.postValue(it.map { it.id }.toSet())
+                favoritesMutableLiveData.postValue(it)
             }
         }
     }
 
     fun isFavorite(movieId: Int): Boolean {
-        val isFavoriteSet = favoritesInfoLiveData.value.orEmpty()
+        val isFavoriteSet = favoritesInfoLiveData.value.orEmpty().map { it.id }
         return isFavoriteSet.contains(movieId)
     }
 
-    fun onFavoriteClick(movieId: Int) {
-        if (isFavorite(movieId)) {
-            dataBase.favoriteDao().deleteById(movieId)
-        } else
-            dataBase.favoriteDao().insert(Favorite(movieId))
+    fun onFavoriteClick(movie: Movie) {
+        if (isFavorite(movie.id)) {
+            dataBase.favoriteDao().deleteById(movie.id)
+        } else {
+            dataBase.favoriteDao().insert(
+                Favorite(
+                    id = movie.id,
+                    backPosterMainMovieImageUrl = movie.backPosterMainMovieImageUrl,
+                    pg = movie.pg,
+                    genres = movie.genres,
+                    rating = movie.rating,
+                    reviews = movie.reviews,
+                    overview = movie.overview,
+                    name = movie.name
+                )
+            )
+        }
     }
 
     fun getMovies(movieListType: MovieListSpecific): LiveData<PagingData<Movie>> = Pager(

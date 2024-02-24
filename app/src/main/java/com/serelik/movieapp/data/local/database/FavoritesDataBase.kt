@@ -11,10 +11,8 @@ abstract class FavoritesDataBase : RoomDatabase() {
 
     abstract fun favoriteDao(): FavoriteDao
 
-
     companion object {
         val DATABASE_NAME = "favorites.db"
-
 
         fun createDataBase(applicationContext: Context): FavoritesDataBase {
             return Room.databaseBuilder(
@@ -24,8 +22,6 @@ abstract class FavoritesDataBase : RoomDatabase() {
             ).allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build()
-
         }
-
     }
 }

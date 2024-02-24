@@ -14,5 +14,10 @@
     <string name="tab_upcoming">Upcoming</string>
     <string name="tab_now_playing">Now Playing</string>
     <string name="no_internet_message">Нет интернета. Попробовать ещё раз?</string>
+    <string name="movies">MOVIES</string>
+    <string name="search">SEARCH</string>
+    <string name="favourite">FAVOURITE</string>
+    <string name="favourite_movies">Favourite Movies</string>
+    <string name="no_favorite_movies">Ты ещё не добавил фильмы. Может стоит начать?</string>
 
 </resources>
