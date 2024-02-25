@@ -19,5 +19,7 @@
     <string name="favourite">FAVOURITE</string>
     <string name="favourite_movies">Favourite Movies</string>
     <string name="no_favorite_movies">Ты ещё не добавил фильмы. Может стоит начать?</string>
+    <string name="search_hint">Введите название фильма</string>
+    <string name="no_movie_found">Ничего не найдено</string>
 
 </resources>
