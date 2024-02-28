@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieSearch
+package com.serelik.movieapp.ui.movie.movieSearch
 
 import android.content.Context
 import androidx.lifecycle.LiveData

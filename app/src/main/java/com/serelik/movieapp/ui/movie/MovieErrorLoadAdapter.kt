@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieSearch
+package com.serelik.movieapp.ui.movie
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,9 +6,9 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import com.serelik.movieapp.R
 
-class SearchErrorLoadAdapter(private val onRetryClickListener: () -> Unit) :
-    LoadStateAdapter<SearchErrorLoadingViewHolder>() {
-    override fun onBindViewHolder(holder: SearchErrorLoadingViewHolder, loadState: LoadState) {
+class MovieErrorLoadAdapter(private val onRetryClickListener: () -> Unit) :
+    LoadStateAdapter<MovieErrorLoadingViewHolder>() {
+    override fun onBindViewHolder(holder: MovieErrorLoadingViewHolder, loadState: LoadState) {
         holder.bind(loadState)
     }
 
@@ -19,9 +19,9 @@ class SearchErrorLoadAdapter(private val onRetryClickListener: () -> Unit) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         loadState: LoadState
-    ): SearchErrorLoadingViewHolder {
+    ): MovieErrorLoadingViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
-        return SearchErrorLoadingViewHolder(
+        return MovieErrorLoadingViewHolder(
             inflater.inflate(
                 R.layout.item_error_load,
                 parent,

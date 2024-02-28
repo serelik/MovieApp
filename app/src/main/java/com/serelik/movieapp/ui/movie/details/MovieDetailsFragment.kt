@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieDetails
+package com.serelik.movieapp.ui.movie.details
 
 import android.os.Bundle
 import android.view.View
@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.movieappst.ui.actor.ActorsAdapter
 import com.example.movieappst.ui.extensions.load
 import com.serelik.movieapp.R
 import com.serelik.movieapp.data.LoadingResults

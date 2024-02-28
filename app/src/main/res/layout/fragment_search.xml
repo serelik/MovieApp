@@ -5,10 +5,6 @@
     android:background="@color/mainBG"
     android:layout_height="match_parent">
 
-
-
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchBarMovie"
         android:layout_width="match_parent"
@@ -26,8 +22,6 @@
             android:hint="@string/search_hint" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <Button
         android:id="@+id/buttonTryAgain"
@@ -53,6 +47,7 @@
         app:spanCount="@integer/RecyclerSpan" />
 
     <TextView
+        android:id="@+id/textViewNoMovie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
@@ -76,7 +71,5 @@
             android:layout_height="match_parent"
              />
     </FrameLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

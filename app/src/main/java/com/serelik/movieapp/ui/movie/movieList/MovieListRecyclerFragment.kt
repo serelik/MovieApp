@@ -1,11 +1,8 @@
-package com.serelik.movieapp.ui.movieSearch
+package com.serelik.movieapp.ui.movie.movieList
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,21 +12,29 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
-import com.serelik.movieapp.databinding.FragmentSearchBinding
-import com.serelik.movieapp.extensions.doOnApplyWindowInsets
+import com.serelik.movieapp.data.local.models.MovieListSpecific
+import com.serelik.movieapp.databinding.FragmentRecyclerBinding
+import com.serelik.movieapp.ui.movie.BaseMovieFragment
+import com.serelik.movieapp.ui.movie.MovieAdapter
+import com.serelik.movieapp.ui.movie.MovieErrorLoadAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class MovieListRecyclerFragment : BaseMovieFragment(R.layout.fragment_recycler)  {
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: MovieListViewModel by viewModels()
 
-    private val viewBinding by viewBinding(FragmentSearchBinding::bind)
+    private val viewBinding by viewBinding(FragmentRecyclerBinding::bind)
 
-    private val searchAdapter by lazy {
-        SearchAdapter(
+    private val currentList: MovieListSpecific by lazy {
+        arguments?.getString(listKey)?.let { MovieListSpecific.valueOf(it) }
+            ?: MovieListSpecific.POPULAR
+    }
+
+    private val movieAdapter by lazy {
+        MovieAdapter(
             onMovieClickListener = { movie ->
 
                 onMovieClick(movie.id)
@@ -39,30 +44,24 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         )
     }
 
-    private val searchErrorLoadAdapter = SearchErrorLoadAdapter() {
-        searchAdapter.retry()
+    private val movieErrorLoadAdapter = MovieErrorLoadAdapter() {
+        movieAdapter.retry()
     }
 
     private fun bindMovieList() {
-        viewModel.searchLiveData.observe(viewLifecycleOwner) {
-            searchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        }
-    }
-
-    private fun onInputTextChange() {
-        viewBinding.textInputEditTextSearch.doOnTextChanged { text, start, before, count ->
-            viewModel.onQueryChange(text?.toString()?.trim().orEmpty())
+        viewModel.getMovies(currentList).observe(viewLifecycleOwner) {
+            movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupInsets()
+        viewBinding.buttonTryAgain.setOnClickListener {
+            bindMovieList()
+        }
 
         bindMovieList()
-
-        onInputTextChange()
 
         lifecycleScope.launch {
             bindState()
@@ -70,20 +69,20 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         val config = ConcatAdapter.Config.Builder().setIsolateViewTypes(false).build()
         viewBinding.recyclerView.adapter =
-            ConcatAdapter(config, searchAdapter, searchErrorLoadAdapter)
+            ConcatAdapter(config, movieAdapter, movieErrorLoadAdapter)
 
         (viewBinding.recyclerView.layoutManager as GridLayoutManager).spanSizeLookup =
             getSpanSizeLookup()
     }
 
     private suspend fun bindState() {
-        searchAdapter.loadStateFlow.collectLatest {
-            viewBinding.progressBarMovieSearchList.isVisible =
+        movieAdapter.loadStateFlow.collectLatest {
+            viewBinding.progressBarMovieList.isVisible =
                 (it.refresh is LoadState.Loading)
             viewBinding.buttonTryAgain.isVisible =
                 (it.refresh is LoadState.Error)
 
-            searchErrorLoadAdapter.loadState = it.append
+            movieErrorLoadAdapter.loadState = it.append
         }
     }
 
@@ -101,24 +100,24 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
+    companion object {
+        const val listKey = "current list"
+
+        fun createFragment(movieListType: MovieListSpecific): MovieListRecyclerFragment {
+            val arg = Bundle()
+            arg.putString(listKey, movieListType.name)
+            val fragment = MovieListRecyclerFragment()
+            fragment.arguments = arg
+            return fragment
+        }
+    }
+
     private fun onMovieClick(movieId: Int) {
         val controller = findNavController()
         controller.navigate(
-            SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(
+            MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(
                 movieId
             )
         )
-    }
-
-    private fun setupInsets() {
-        viewBinding.root.doOnApplyWindowInsets { view, insets, rect ->
-            val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            viewBinding.root.updatePadding(
-                top = rect.top + systemBarsInsets.top
-            )
-
-            insets.isConsumed
-        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.movieappst.ui.actor
+package com.serelik.movieapp.ui.movie.details
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieList
+package com.serelik.movieapp.ui.movie.movieList
 
 import android.os.Bundle
 import android.view.View

@@ -1,4 +1,4 @@
-package com.example.movieappst.ui.actor
+package com.serelik.movieapp.ui.movie.details
 
 import androidx.recyclerview.widget.DiffUtil
 import com.serelik.movieapp.data.local.models.Actor

@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieList
+package com.serelik.movieapp.ui.movie.movieSearch
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

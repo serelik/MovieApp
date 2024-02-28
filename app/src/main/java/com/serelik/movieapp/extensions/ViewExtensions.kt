@@ -1,7 +1,7 @@
 package com.serelik.movieapp.extensions
 
 import android.view.View
-import android.view.WindowInsets
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 
@@ -16,12 +16,12 @@ fun View.fitOnTopInsets() {
     }
 }
 
-fun View.doOnApplyWindowInsets(block: (View, WindowInsets, InitialPadding) -> Unit) {
+fun View.doOnApplyWindowInsets(block: (View, WindowInsetsCompat, InitialPadding) -> Unit) {
     val initialPadding = recordInitialPaddingForView(this)
     // Create a snapshot of the view's padding state
     // Set an actual OnApplyWindowInsetsListener which proxies to the given
     // lambda, also passing in the original padding state
-    setOnApplyWindowInsetsListener { v, insets ->
+  ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
         block(v, insets, initialPadding)
         // Always return the insets, so that children can also use them
         insets
