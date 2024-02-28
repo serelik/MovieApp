@@ -19,7 +19,11 @@
         android:id="@+id/favoriteListFragment"
         android:name="com.serelik.movieapp.ui.favoriteList.FavoriteListFragment"
         android:label="FavoriteListFragment"
-        tools:layout="@layout/fragment_favorite_list" />
+        tools:layout="@layout/fragment_favorite_list" >
+        <action
+            android:id="@+id/action_favoriteListFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/movieDetailsFragment"
