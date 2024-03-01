@@ -26,28 +26,14 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
 
-    private val viewModel: SearchViewModel by viewModels()
+    override val viewModel: SearchViewModel by viewModels()
 
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
-    private val searchAdapter by lazy {
-        MovieAdapter(
-            onMovieClickListener = { movie ->
-
-                onMovieClick(movie.id)
-            },
-            onFavoriteClick = viewModel::onFavoriteClick,
-            isFavoriteMovie = viewModel::isFavorite
-        )
-    }
-
-    private val searchErrorLoadAdapter = MovieErrorLoadAdapter() {
-        searchAdapter.retry()
-    }
 
     private fun bindMovieList() {
         viewModel.searchLiveData.observe(viewLifecycleOwner) {
-            searchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
     }
 
@@ -71,30 +57,25 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
             bindState()
         }
 
-        val config = ConcatAdapter.Config.Builder().setIsolateViewTypes(false).build()
-        viewBinding.recyclerView.adapter =
-            ConcatAdapter(config, searchAdapter, searchErrorLoadAdapter)
-
-        (viewBinding.recyclerView.layoutManager as GridLayoutManager).spanSizeLookup =
-            getSpanSizeLookup(viewBinding.recyclerView)
+        setupRecycler(viewBinding.recyclerView)
     }
 
     private suspend fun bindState() {
-        searchAdapter.loadStateFlow.collectLatest {
+        movieAdapter.loadStateFlow.collectLatest {
             viewBinding.progressBarMovieSearchList.isVisible =
                 (it.refresh is LoadState.Loading)
             viewBinding.buttonTryAgain.isVisible =
                 (it.refresh is LoadState.Error)
 
             if (it.append.endOfPaginationReached) {
-                viewBinding.textViewNoMovie.isVisible = searchAdapter.itemCount < 1
+                viewBinding.textViewNoMovie.isVisible = movieAdapter.itemCount < 1
             }
 
-            searchErrorLoadAdapter.loadState = it.append
+            movieErrorLoadAdapter.loadState = it.append
         }
     }
 
-    private fun onMovieClick(movieId: Int) {
+    override fun onMovieClick(movieId: Int) {
         val controller = findNavController()
         controller.navigate(
             SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(
