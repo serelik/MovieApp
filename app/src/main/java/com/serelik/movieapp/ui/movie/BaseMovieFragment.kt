@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 abstract class BaseMovieFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
 
-    protected abstract val viewModel: BaseViewModel
+    protected abstract val viewModel: BaseMovieListViewModel
 
     val movieAdapter by lazy {
         MovieAdapter(

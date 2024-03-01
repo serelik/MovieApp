@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MovieListRecyclerFragment : BaseMovieFragment(R.layout.fragment_recycler) {
 
-    override val viewModel: MovieListViewModel by viewModels()
+    override val viewModel: MovieListMovieListViewModel by viewModels()
 
     private val viewBinding by viewBinding(FragmentRecyclerBinding::bind)
 

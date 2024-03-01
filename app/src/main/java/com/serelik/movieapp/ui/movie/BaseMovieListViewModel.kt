@@ -12,7 +12,7 @@ import com.serelik.movieapp.data.network.MovieDBApi
 import com.serelik.movieapp.data.network.MovieMapper
 import dagger.hilt.android.qualifiers.ApplicationContext
 
-abstract class BaseViewModel(
+abstract class BaseMovieListViewModel(
     private val movieApiService: MovieDBApi,
     private val movieMapper: MovieMapper,
     private val genresStorage: GenresStorage,

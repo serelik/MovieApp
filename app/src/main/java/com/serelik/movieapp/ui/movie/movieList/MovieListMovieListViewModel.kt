@@ -13,19 +13,19 @@ import com.serelik.movieapp.data.local.models.MovieListSpecific
 import com.serelik.movieapp.data.network.MovieDBApi
 import com.serelik.movieapp.data.network.MovieMapper
 import com.serelik.movieapp.data.network.MoviePagingSource
-import com.serelik.movieapp.ui.movie.BaseViewModel
+import com.serelik.movieapp.ui.movie.BaseMovieListViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(
+class MovieListMovieListViewModel @Inject constructor(
     private val movieApiService: MovieDBApi,
     private val movieMapper: MovieMapper,
     private val genresStorage: GenresStorage,
     @ApplicationContext context: Context
-) : BaseViewModel(
+) : BaseMovieListViewModel(
     movieApiService,
     movieMapper,
     genresStorage,

@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
 
-    override val viewModel: SearchViewModel by viewModels()
+    override val viewModel: SearchMovieListViewModel by viewModels()
 
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
