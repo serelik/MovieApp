@@ -10,15 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
 import com.serelik.movieapp.databinding.FragmentSearchBinding
 import com.serelik.movieapp.extensions.doOnApplyWindowInsets
 import com.serelik.movieapp.ui.movie.BaseMovieFragment
-import com.serelik.movieapp.ui.movie.MovieAdapter
-import com.serelik.movieapp.ui.movie.MovieErrorLoadAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -30,7 +26,6 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
 
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
-
     private fun bindMovieList() {
         viewModel.searchLiveData.observe(viewLifecycleOwner) {
             movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -40,7 +35,6 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
     private fun onInputTextChange() {
         viewBinding.textInputEditTextSearch.doOnTextChanged { text, start, before, count ->
             viewModel.onQueryChange(text?.toString()?.trim().orEmpty())
-
         }
     }
 

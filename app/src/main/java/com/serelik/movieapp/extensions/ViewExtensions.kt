@@ -18,25 +18,17 @@ fun View.fitOnTopInsets() {
 
 fun View.doOnApplyWindowInsets(block: (View, WindowInsetsCompat, InitialPadding) -> Unit) {
     val initialPadding = recordInitialPaddingForView(this)
-    // Create a snapshot of the view's padding state
-    // Set an actual OnApplyWindowInsetsListener which proxies to the given
-    // lambda, also passing in the original padding state
-  ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+    ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
         block(v, insets, initialPadding)
-        // Always return the insets, so that children can also use them
         insets
     }
-    // request some insets
     requestApplyInsetsWhenAttached()
 }
 
 fun View.requestApplyInsetsWhenAttached() {
     if (isAttachedToWindow) {
-        // We're already attached, just request as normal
         requestApplyInsets()
     } else {
-        // We're not attached to the hierarchy, add a listener to
-        // request when we are
         addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
             override fun onViewAttachedToWindow(v: View) {
                 v.removeOnAttachStateChangeListener(this)
