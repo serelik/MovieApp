@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagingData
 import com.serelik.movieapp.data.local.database.FavoritesDataBase
 import com.serelik.movieapp.data.local.models.Favorite
 import com.serelik.movieapp.data.local.models.GenresStorage
 import com.serelik.movieapp.data.local.models.Movie
+import com.serelik.movieapp.data.local.models.MovieUI
 import com.serelik.movieapp.data.network.MovieDBApi
 import com.serelik.movieapp.data.network.MovieMapper
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,6 +24,9 @@ abstract class BaseMovieListViewModel(
 
     private val favoritesMutableLiveData = MutableLiveData<List<Favorite>>()
     private val favoritesInfoLiveData: LiveData<List<Favorite>> = favoritesMutableLiveData
+
+    protected val movieMutableLiveData = MutableLiveData<PagingData<MovieUI>>()
+    val movieLiveData: LiveData<PagingData<MovieUI>> = movieMutableLiveData
 
     suspend fun getFavoriteMovies() {
         dataBase.favoriteDao().getAll().collect { it ->

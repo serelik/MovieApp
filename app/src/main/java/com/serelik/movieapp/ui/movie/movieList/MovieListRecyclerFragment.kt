@@ -28,10 +28,10 @@ class MovieListRecyclerFragment : BaseMovieFragment(R.layout.fragment_recycler) 
             ?: MovieListSpecific.POPULAR
     }
 
-    private fun bindMovieList() {
-        viewModel.getMovies(currentList).observe(viewLifecycleOwner) {
-            movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.getMovies(currentList)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

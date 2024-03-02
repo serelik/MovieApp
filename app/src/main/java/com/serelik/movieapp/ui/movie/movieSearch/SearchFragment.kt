@@ -26,12 +26,6 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
 
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
-    private fun bindMovieList() {
-        viewModel.searchLiveData.observe(viewLifecycleOwner) {
-            movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        }
-    }
-
     private fun onInputTextChange() {
         viewBinding.textInputEditTextSearch.doOnTextChanged { text, start, before, count ->
             viewModel.onQueryChange(text?.toString()?.trim().orEmpty())
