@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieList
+package com.serelik.movieapp.ui.movie
 
 import android.view.View
 import androidx.core.view.isVisible

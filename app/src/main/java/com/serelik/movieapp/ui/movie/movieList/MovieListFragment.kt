@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieList
+package com.serelik.movieapp.ui.movie.movieList
 
 import android.os.Bundle
 import android.view.View
@@ -8,6 +8,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.serelik.movieapp.R
 import com.serelik.movieapp.data.local.models.MovieListSpecific
 import com.serelik.movieapp.databinding.FragmentMovieListBinding
+import com.serelik.movieapp.extensions.fitOnTopInsets
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +18,8 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewBinding.root.fitOnTopInsets()
 
         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle)
 

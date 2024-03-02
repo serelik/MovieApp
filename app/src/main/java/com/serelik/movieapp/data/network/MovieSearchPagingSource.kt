@@ -1,17 +1,16 @@
 package com.serelik.movieapp.data.network
 
 import com.serelik.movieapp.data.local.models.GenresStorage
-import com.serelik.movieapp.data.local.models.MovieListSpecific
 import com.serelik.movieapp.data.network.models.MovieListResponse
 
-class MoviePagingSource(
+class MovieSearchPagingSource(
     private val movieApiService: MovieDBApi,
     movieMapper: MovieMapper,
-    private val movieListType: MovieListSpecific,
+    private val query: String,
     genresStorage: GenresStorage
 ) : BaseMoviePagingSource(genresStorage = genresStorage, movieMapper = movieMapper) {
 
     override suspend fun getMovies(pageNumber: Int): MovieListResponse {
-        return movieApiService.getMoviesList(movieListType.remotePath, pageNumber)
+        return movieApiService.getSearchMovieList(query, pageNumber)
     }
 }

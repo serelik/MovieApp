@@ -1,10 +1,11 @@
-package com.serelik.movieapp.ui.movieList
+package com.serelik.movieapp.ui.movie
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.serelik.movieapp.R
 import com.serelik.movieapp.data.local.models.Movie
+import com.serelik.movieapp.ui.movie.movieSearch.MovieViewHolder
 
 class MovieAdapter(
     private val onMovieClickListener: (Movie) -> Unit,

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/movieListFragment"
-        android:name="com.serelik.movieapp.ui.movieList.MovieListFragment"
+        android:name="com.serelik.movieapp.ui.movie.movieList.MovieListFragment"
         android:label="MovieListFragment"
         tools:layout="@layout/fragment_movie_list">
         <action
@@ -19,11 +19,15 @@
         android:id="@+id/favoriteListFragment"
         android:name="com.serelik.movieapp.ui.favoriteList.FavoriteListFragment"
         android:label="FavoriteListFragment"
-        tools:layout="@layout/fragment_favorite_list" />
+        tools:layout="@layout/fragment_favorite_list" >
+        <action
+            android:id="@+id/action_favoriteListFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.serelik.movieapp.ui.movieDetails.MovieDetailsFragment"
+        android:name="com.serelik.movieapp.ui.movie.details.MovieDetailsFragment"
         android:label="MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details">
 
@@ -43,6 +47,15 @@
             android:name="actorId"
             app:argType="integer" />
 
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_search"
+        android:id="@+id/searchFragment"
+        android:name="com.serelik.movieapp.ui.movie.movieSearch.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 
 

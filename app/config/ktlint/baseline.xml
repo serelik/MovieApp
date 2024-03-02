@@ -6,6 +6,9 @@
     <file name="src/main/java/com/serelik/movieapp/data/LoadingResult.kt">
         <error line="1" column="1" source="filename" />
     </file>
+    <file name="src/main/java/com/serelik/movieapp/ui/movie/BaseFragment.kt">
+        <error line="1" column="1" source="filename" />
+    </file>
     <file name="src/test/java/com/serelik/movieapp/ExampleUnitTest.kt">
         <error line="3" column="1" source="no-wildcard-imports" />
     </file>

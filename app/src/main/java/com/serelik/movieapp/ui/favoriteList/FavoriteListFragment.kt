@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
 import com.serelik.movieapp.databinding.FragmentFavoriteListBinding
-import com.serelik.movieapp.ui.movieList.MovieListFragmentDirections
+import com.serelik.movieapp.extensions.fitOnTopInsets
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +40,8 @@ class FavoriteListFragment : Fragment(R.layout.fragment_favorite_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewBinding.root.fitOnTopInsets()
+
         viewModel.getFavoriteMovies()
 
         bindMovieList()
@@ -48,7 +50,7 @@ class FavoriteListFragment : Fragment(R.layout.fragment_favorite_list) {
     private fun onMovieClick(movieId: Int) {
         val controller = findNavController()
         controller.navigate(
-            MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(
+            FavoriteListFragmentDirections.actionFavoriteListFragmentToMovieDetailsFragment(
                 movieId
             )
         )

@@ -14,6 +14,7 @@ import com.serelik.movieapp.data.LoadingResults
 import com.serelik.movieapp.data.local.models.ActorDetails
 import com.serelik.movieapp.data.local.models.MovieByActor
 import com.serelik.movieapp.databinding.FragmentActorBinding
+import com.serelik.movieapp.extensions.fitOnTopInsets
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -70,6 +71,8 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.movieInfoLiveData.observe(viewLifecycleOwner, ::setState)
+
+        viewBinding.root.fitOnTopInsets()
 
         viewBinding.recyclerView.adapter = moviesAdapter
         viewBinding.recyclerView.addItemDecoration(MovieItemDecorator())

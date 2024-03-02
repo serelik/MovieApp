@@ -20,6 +20,12 @@ interface MovieDBApi {
         @Query("page") page: Int
     ): MovieListResponse
 
+    @GET("search/movie")
+    suspend fun getSearchMovieList(
+        @Query("query") query: String,
+        @Query("page") page: Int
+    ): MovieListResponse
+
     @GET("movie/{movie_id}")
     suspend fun getMovie(
         @Path(value = "movie_id") key: Int

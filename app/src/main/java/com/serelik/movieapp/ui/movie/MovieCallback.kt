@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieList
+package com.serelik.movieapp.ui.movie
 
 import androidx.recyclerview.widget.DiffUtil
 import com.serelik.movieapp.data.local.models.Movie

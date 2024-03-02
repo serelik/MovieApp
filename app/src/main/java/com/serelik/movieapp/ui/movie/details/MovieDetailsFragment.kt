@@ -1,20 +1,23 @@
-package com.serelik.movieapp.ui.movieDetails
+package com.serelik.movieapp.ui.movie.details
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.graphics.Insets
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.movieappst.ui.actor.ActorsAdapter
 import com.example.movieappst.ui.extensions.load
 import com.serelik.movieapp.R
 import com.serelik.movieapp.data.LoadingResults
 import com.serelik.movieapp.data.local.models.Actor
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.databinding.FragmentMovieDetailsBinding
+import com.serelik.movieapp.extensions.doOnApplyWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -72,6 +75,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupInsets()
+
         viewModel.movieInfoLiveData.observe(viewLifecycleOwner, ::setState)
 
         viewBinding.recyclerView.adapter = actorsAdapter
@@ -104,5 +109,24 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 actorId
             )
         )
+    }
+
+    private fun setupInsets() {
+        viewBinding.root.doOnApplyWindowInsets { view, insets, rect ->
+            val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            viewBinding.viewStatusBarBackground.updateLayoutParams {
+                height = systemBarsInsets.top
+            }
+            WindowInsetsCompat.Builder()
+                .setInsets(
+                    WindowInsetsCompat.Type.systemBars(),
+                    Insets.of(
+                        systemBarsInsets.left,
+                        systemBarsInsets.top,
+                        systemBarsInsets.right,
+                        0
+                    )
+                ).build()
+        }
     }
 }

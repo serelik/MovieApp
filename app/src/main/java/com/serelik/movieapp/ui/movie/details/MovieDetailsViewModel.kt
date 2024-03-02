@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movieDetails
+package com.serelik.movieapp.ui.movie.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
