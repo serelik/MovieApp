@@ -18,7 +18,7 @@ abstract class BaseMovieFragment(@LayoutRes contentLayoutId: Int) : Fragment(con
             onMovieClickListener = { movie ->
                 onMovieClick(movie.id)
             },
-            onFavoriteClick = viewModel::onFavoriteClick,
+            onFavoriteClick = viewModel::onFavoriteClick
         )
     }
 

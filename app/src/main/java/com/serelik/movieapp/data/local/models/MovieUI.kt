@@ -4,4 +4,3 @@ data class MovieUI(
     val movie: Movie,
     val isFavorite: Boolean
 )
-

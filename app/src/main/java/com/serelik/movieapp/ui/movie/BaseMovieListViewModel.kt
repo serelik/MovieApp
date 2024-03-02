@@ -35,7 +35,6 @@ abstract class BaseMovieListViewModel(
             favoritesMutableLiveData.postValue(it)
             updateFavoriteState()
         }
-
     }
 
     fun isFavorite(movieId: Int): Boolean {
@@ -63,9 +62,7 @@ abstract class BaseMovieListViewModel(
     }
 
     fun updateFavoriteState() {
-
-        Log.d("check" ,"isin")
-        val pagingData = movieMutableLiveData.value?: return
+        val pagingData = movieMutableLiveData.value ?: return
 
         val newPagingData = pagingData.map { it.copy(isFavorite = isFavorite(it.movie.id)) }
 
