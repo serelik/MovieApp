@@ -35,6 +35,8 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        lifecycleScope.launch { viewModel.getFavoriteMovies() }
+
         setupInsets()
 
         bindMovieList()

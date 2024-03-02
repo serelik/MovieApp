@@ -32,10 +32,14 @@ class MovieListRecyclerFragment : BaseMovieFragment(R.layout.fragment_recycler) 
         super.onCreate(savedInstanceState)
 
         viewModel.getMovies(currentList)
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch { viewModel.getFavoriteMovies() }
 
         viewBinding.buttonTryAgain.setOnClickListener {
             bindMovieList()

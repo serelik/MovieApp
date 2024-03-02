@@ -1,10 +1,12 @@
 package com.serelik.movieapp.ui.movie
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
+import androidx.paging.map
 import com.serelik.movieapp.data.local.database.FavoritesDataBase
 import com.serelik.movieapp.data.local.models.Favorite
 import com.serelik.movieapp.data.local.models.GenresStorage
@@ -31,7 +33,9 @@ abstract class BaseMovieListViewModel(
     suspend fun getFavoriteMovies() {
         dataBase.favoriteDao().getAll().collect { it ->
             favoritesMutableLiveData.postValue(it)
+            updateFavoriteState()
         }
+
     }
 
     fun isFavorite(movieId: Int): Boolean {
@@ -56,5 +60,15 @@ abstract class BaseMovieListViewModel(
                 )
             )
         }
+    }
+
+    fun updateFavoriteState() {
+
+        Log.d("check" ,"isin")
+        val pagingData = movieMutableLiveData.value?: return
+
+        val newPagingData = pagingData.map { it.copy(isFavorite = isFavorite(it.movie.id)) }
+
+        movieMutableLiveData.postValue(newPagingData)
     }
 }

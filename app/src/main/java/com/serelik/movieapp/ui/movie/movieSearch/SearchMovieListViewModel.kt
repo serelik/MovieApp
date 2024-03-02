@@ -33,9 +33,6 @@ class SearchMovieListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getFavoriteMovies()
-        }
-        viewModelScope.launch {
             searchFlow
                 .debounce(SEARCH_DEBOUNCE)
                 .collectLatest {

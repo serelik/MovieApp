@@ -33,12 +33,6 @@ class MovieListMovieListViewModel @Inject constructor(
     context
 ) {
 
-    init {
-        viewModelScope.launch {
-            getFavoriteMovies()
-        }
-    }
-
     fun getMovies(movieListType: MovieListSpecific) {
         viewModelScope.launch {
             Pager(
