@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movie.movieSearch
+package com.serelik.movieapp.ui.movie.search
 
 import android.os.Bundle
 import android.view.View

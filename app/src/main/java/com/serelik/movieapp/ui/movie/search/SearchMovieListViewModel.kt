@@ -1,13 +1,8 @@
-package com.serelik.movieapp.ui.movie.movieSearch
+package com.serelik.movieapp.ui.movie.search
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
-import androidx.paging.map
 import com.serelik.movieapp.data.local.models.GenresStorage
-import com.serelik.movieapp.data.local.models.MovieUI
 import com.serelik.movieapp.data.network.MovieDBApi
 import com.serelik.movieapp.data.network.MovieMapper
 import com.serelik.movieapp.data.network.MovieSearchPagingSource
@@ -17,7 +12,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,25 +41,15 @@ class SearchMovieListViewModel @Inject constructor(
         }
     }
 
-    fun getMovies(query: String) {
-        viewModelScope.launch {
-            Pager(
-                config = PagingConfig(pageSize = 10, maxSize = 40),
-                pagingSourceFactory = {
-                    MovieSearchPagingSource(
-                        movieApiService,
-                        movieMapper,
-                        query,
-                        genresStorage
-                    )
-                }
-            ).flow.cachedIn(viewModelScope)
-                .map {
-                    it.map { movie ->
-                        MovieUI(movie, isFavorite(movie.id))
-                    }
-                }.collectLatest { movieMutableLiveData.postValue(it) }
-        }
+    private fun getMovies(query: String) {
+        val pagingSource = MovieSearchPagingSource(
+            movieApiService,
+            movieMapper,
+            query,
+            genresStorage
+        )
+
+        handlePagingSource(pagingSource)
     }
 
     companion object {

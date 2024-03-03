@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movie.movieList
+package com.serelik.movieapp.ui.movie.list
 
 import android.os.Bundle
 import android.view.View
@@ -35,13 +35,16 @@ class MovieListRecyclerFragment : BaseMovieFragment(R.layout.fragment_recycler) 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lifecycleScope.launch { viewModel.getFavoriteMovies() }
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch { viewModel.getFavoriteMovies() }
+
 
         viewBinding.buttonTryAgain.setOnClickListener {
             bindMovieList()
         }
+
+        viewBinding.recyclerView.itemAnimator = null
 
         bindMovieList()
 

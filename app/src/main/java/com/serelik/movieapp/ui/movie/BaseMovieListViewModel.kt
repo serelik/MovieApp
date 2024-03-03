@@ -1,20 +1,29 @@
 package com.serelik.movieapp.ui.movie
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.serelik.movieapp.data.local.database.FavoritesDataBase
 import com.serelik.movieapp.data.local.models.Favorite
 import com.serelik.movieapp.data.local.models.GenresStorage
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.data.local.models.MovieUI
+import com.serelik.movieapp.data.network.BaseMoviePagingSource
 import com.serelik.movieapp.data.network.MovieDBApi
 import com.serelik.movieapp.data.network.MovieMapper
+import com.serelik.movieapp.data.network.MovieSearchPagingSource
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 abstract class BaseMovieListViewModel(
     private val movieApiService: MovieDBApi,
@@ -67,5 +76,21 @@ abstract class BaseMovieListViewModel(
         val newPagingData = pagingData.map { it.copy(isFavorite = isFavorite(it.movie.id)) }
 
         movieMutableLiveData.postValue(newPagingData)
+    }
+
+    protected fun handlePagingSource(pagingSource: BaseMoviePagingSource) {
+        viewModelScope.launch {
+            Pager(
+                config = PagingConfig(pageSize = 10, maxSize = 40),
+                pagingSourceFactory = {
+                    pagingSource
+                }
+            ).flow.cachedIn(viewModelScope)
+                .map {
+                    it.map { movie ->
+                        MovieUI(movie, isFavorite(movie.id))
+                    }
+                }.collectLatest { movieMutableLiveData.postValue(it) }
+        }
     }
 }

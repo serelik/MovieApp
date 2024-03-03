@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movie.movieList
+package com.serelik.movieapp.ui.movie.list
 
 import android.os.Bundle
 import android.view.View
@@ -23,7 +23,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle)
 
-        val movieListTypes = MovieListSpecific.values()
+        val movieListTypes = MovieListSpecific.entries
 
         viewBinding.viewPager.adapter = adapter
 
