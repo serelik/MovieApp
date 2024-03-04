@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
+
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
 
         setupInsets()
 
