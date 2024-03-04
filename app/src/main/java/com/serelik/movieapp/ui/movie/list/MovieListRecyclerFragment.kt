@@ -41,7 +41,7 @@ class MovieListRecyclerFragment : BaseMovieFragment(R.layout.fragment_recycler) 
 
 
         viewBinding.buttonTryAgain.setOnClickListener {
-            bindMovieList()
+            viewModel.getMovies(currentList)
         }
 
         viewBinding.recyclerView.itemAnimator = null
