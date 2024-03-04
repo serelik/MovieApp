@@ -1,7 +1,10 @@
 package com.serelik.movieapp.ui.movie.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -14,6 +17,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
 import com.serelik.movieapp.databinding.FragmentSearchBinding
 import com.serelik.movieapp.extensions.doOnApplyWindowInsets
+import com.serelik.movieapp.extensions.hideSoftKeyBoard
 import com.serelik.movieapp.ui.movie.BaseMovieFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -47,7 +51,20 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
             bindState()
         }
 
+        hideKeyboardOnSearchClick()
+
         setupRecycler(viewBinding.recyclerView)
+    }
+
+    private fun hideKeyboardOnSearchClick() {
+        viewBinding.textInputEditTextSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewBinding.textInputEditTextSearch.hideSoftKeyBoard()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private suspend fun bindState() {
