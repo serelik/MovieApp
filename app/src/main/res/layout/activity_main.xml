@@ -28,6 +28,6 @@
         app:itemIconTint="@drawable/selector_icon_bottom_menu"
         app:itemTextColor="@drawable/selector_icon_bottom_menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/men_bottom_navigation_bar" />
+        app:menu="@menu/menu_bottom_navigation_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
