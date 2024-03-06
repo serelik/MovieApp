@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.serelik.movieapp.data.local.database.FavoritesDataBase
@@ -19,7 +18,6 @@ import com.serelik.movieapp.data.local.models.MovieUI
 import com.serelik.movieapp.data.network.BaseMoviePagingSource
 import com.serelik.movieapp.data.network.MovieDBApi
 import com.serelik.movieapp.data.network.MovieMapper
-import com.serelik.movieapp.data.network.MovieSearchPagingSource
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map

@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
+            false
 
         setupInsets()
 
@@ -56,7 +57,9 @@ class MainActivity : AppCompatActivity() {
             val bottomPadding = if (isKeyboardVisible) 0 else systemBarsInsets.bottom
 
             viewBinding.root.updatePadding(
-                bottom = bottomPadding
+                bottom = bottomPadding,
+                right = systemBarsInsets.right,
+                left = systemBarsInsets.left
             )
 
             WindowInsetsCompat.Builder()

@@ -38,8 +38,6 @@ class MovieListRecyclerFragment : BaseMovieFragment(R.layout.fragment_recycler) 
         lifecycleScope.launch { viewModel.getFavoriteMovies() }
         super.onViewCreated(view, savedInstanceState)
 
-
-
         viewBinding.buttonTryAgain.setOnClickListener {
             viewModel.getMovies(currentList)
         }
