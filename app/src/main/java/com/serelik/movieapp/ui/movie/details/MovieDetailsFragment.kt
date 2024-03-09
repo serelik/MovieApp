@@ -69,15 +69,17 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        movieId.let { viewModel.getMovieAndActorInfo(it) }
+        if (savedInstanceState == null) {
+            movieId.let { viewModel.getMovieAndActorInfo(it) }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupInsets()
-
         viewModel.movieInfoLiveData.observe(viewLifecycleOwner, ::setState)
+
+        setupInsets()
 
         viewBinding.recyclerView.adapter = actorsAdapter
 

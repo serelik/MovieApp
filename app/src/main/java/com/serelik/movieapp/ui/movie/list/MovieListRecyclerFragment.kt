@@ -31,7 +31,9 @@ class MovieListRecyclerFragment : BaseMovieFragment(R.layout.fragment_recycler) 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getMovies(currentList)
+        if (savedInstanceState == null) {
+            viewModel.getMovies(currentList)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
