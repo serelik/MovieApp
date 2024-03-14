@@ -18,9 +18,6 @@ class MovieListMovieListViewModel @Inject constructor(
     private val genresStorage: GenresStorage,
     @ApplicationContext context: Context
 ) : BaseMovieListViewModel(
-    movieApiService,
-    movieMapper,
-    genresStorage,
     context
 ) {
 
