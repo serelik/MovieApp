@@ -44,12 +44,10 @@
             android:backgroundTint="#00FFFFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/textViewPg"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/selector_ic_like"
-            android:layout_marginTop="5dp"
-            android:padding="10dp"
-            android:layout_marginEnd="6dp"
+            android:padding="16dp"
             />
 
 

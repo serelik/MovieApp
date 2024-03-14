@@ -4,13 +4,24 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.serelik.movieapp.data.local.database.FavoritesDataBase
 import com.serelik.movieapp.data.local.models.Favorite
 import com.serelik.movieapp.data.local.models.GenresStorage
 import com.serelik.movieapp.data.local.models.Movie
+import com.serelik.movieapp.data.local.models.MovieUI
+import com.serelik.movieapp.data.network.BaseMoviePagingSource
 import com.serelik.movieapp.data.network.MovieDBApi
 import com.serelik.movieapp.data.network.MovieMapper
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 abstract class BaseMovieListViewModel(
     private val movieApiService: MovieDBApi,
@@ -23,9 +34,13 @@ abstract class BaseMovieListViewModel(
     private val favoritesMutableLiveData = MutableLiveData<List<Favorite>>()
     private val favoritesInfoLiveData: LiveData<List<Favorite>> = favoritesMutableLiveData
 
+    protected val movieMutableLiveData = MutableLiveData<PagingData<MovieUI>>()
+    val movieLiveData: LiveData<PagingData<MovieUI>> = movieMutableLiveData
+
     suspend fun getFavoriteMovies() {
         dataBase.favoriteDao().getAll().collect { it ->
             favoritesMutableLiveData.postValue(it)
+            updateFavoriteState()
         }
     }
 
@@ -50,6 +65,30 @@ abstract class BaseMovieListViewModel(
                     name = movie.name
                 )
             )
+        }
+    }
+
+    fun updateFavoriteState() {
+        val pagingData = movieMutableLiveData.value ?: return
+
+        val newPagingData = pagingData.map { it.copy(isFavorite = isFavorite(it.movie.id)) }
+
+        movieMutableLiveData.postValue(newPagingData)
+    }
+
+    protected fun handlePagingSource(pagingSource: BaseMoviePagingSource) {
+        viewModelScope.launch {
+            Pager(
+                config = PagingConfig(pageSize = 10, maxSize = 40),
+                pagingSourceFactory = {
+                    pagingSource
+                }
+            ).flow.cachedIn(viewModelScope)
+                .map {
+                    it.map { movie ->
+                        MovieUI(movie, isFavorite(movie.id))
+                    }
+                }.collectLatest { movieMutableLiveData.postValue(it) }
         }
     }
 }

@@ -20,10 +20,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:background="@color/mainBG"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/gray"
+        app:tabIndicatorColor="@null"
+        app:tabIndicatorHeight="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:tabIndicator="@drawable/gradient_tab"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:tabIndicatorColor="@color/pink"
         app:tabIndicatorFullWidth="true" />
 
 

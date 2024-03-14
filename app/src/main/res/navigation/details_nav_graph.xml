@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/details_nav_graph"
+    app:startDestination="@id/movieDetailsFragment">
+
+
+
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.serelik.movieapp.ui.movie.details.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details">
+
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_actorDetailsFragment"
+            app:destination="@id/actorDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/actorDetailsFragment"
+        android:name="com.serelik.movieapp.ui.actorDetails.ActorDetailsFragment"
+        android:label="ActorDetailsFragment">
+
+        <argument
+            android:name="actorId"
+            app:argType="integer" />
+
+    </fragment>
+
+
+</navigation>

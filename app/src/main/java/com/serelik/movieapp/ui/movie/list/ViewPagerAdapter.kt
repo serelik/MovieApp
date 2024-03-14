@@ -1,4 +1,4 @@
-package com.serelik.movieapp.ui.movie.movieList
+package com.serelik.movieapp.ui.movie.list
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

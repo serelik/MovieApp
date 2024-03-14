@@ -1,7 +1,8 @@
-package com.serelik.movieapp.ui.movie.movieSearch
+package com.serelik.movieapp.ui.movie.search
 
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -14,6 +15,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.serelik.movieapp.R
 import com.serelik.movieapp.databinding.FragmentSearchBinding
 import com.serelik.movieapp.extensions.doOnApplyWindowInsets
+import com.serelik.movieapp.extensions.hideSoftKeyBoard
 import com.serelik.movieapp.ui.movie.BaseMovieFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -26,12 +28,6 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
 
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
-    private fun bindMovieList() {
-        viewModel.searchLiveData.observe(viewLifecycleOwner) {
-            movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        }
-    }
-
     private fun onInputTextChange() {
         viewBinding.textInputEditTextSearch.doOnTextChanged { text, start, before, count ->
             viewModel.onQueryChange(text?.toString()?.trim().orEmpty())
@@ -40,6 +36,8 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch { viewModel.getFavoriteMovies() }
 
         setupInsets()
 
@@ -51,7 +49,20 @@ class SearchFragment : BaseMovieFragment(R.layout.fragment_search) {
             bindState()
         }
 
+        hideKeyboardOnSearchClick()
+
         setupRecycler(viewBinding.recyclerView)
+    }
+
+    private fun hideKeyboardOnSearchClick() {
+        viewBinding.textInputEditTextSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewBinding.textInputEditTextSearch.hideSoftKeyBoard()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private suspend fun bindState() {

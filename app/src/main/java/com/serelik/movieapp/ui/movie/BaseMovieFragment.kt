@@ -18,8 +18,7 @@ abstract class BaseMovieFragment(@LayoutRes contentLayoutId: Int) : Fragment(con
             onMovieClickListener = { movie ->
                 onMovieClick(movie.id)
             },
-            onFavoriteClick = viewModel::onFavoriteClick,
-            isFavoriteMovie = viewModel::isFavorite
+            onFavoriteClick = viewModel::onFavoriteClick
         )
     }
 
@@ -50,5 +49,11 @@ abstract class BaseMovieFragment(@LayoutRes contentLayoutId: Int) : Fragment(con
 
         (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup =
             getSpanSizeLookup(recyclerView)
+    }
+
+    protected fun bindMovieList() {
+        viewModel.movieLiveData.observe(viewLifecycleOwner) {
+            movieAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
     }
 }

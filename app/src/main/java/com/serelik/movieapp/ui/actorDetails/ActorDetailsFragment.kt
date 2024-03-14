@@ -64,7 +64,9 @@ class ActorDetailsFragment : Fragment(R.layout.fragment_actor) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        actorId.let { viewModel.getMovieAndActorInfo(it) }
+        if (savedInstanceState == null) {
+            actorId.let { viewModel.getMovieAndActorInfo(it) }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
