@@ -83,6 +83,17 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
         viewBinding.recyclerView.adapter = actorsAdapter
 
+        viewModel.getFavoriteMovies()
+
+        viewModel.favoritesInfoLiveData.observe(viewLifecycleOwner) {
+            viewBinding.imageViewFavorite.isSelected = viewModel.isFavorite(movieId)
+        }
+
+        viewBinding.imageViewFavorite.setOnClickListener {
+            viewModel.onFavoriteClick()
+            viewBinding.imageViewFavorite.isSelected = !viewBinding.imageViewFavorite.isSelected
+        }
+
         viewBinding.textViewButtonBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -102,6 +113,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             textViewFilmOverview.text = movieInfo.overview
             recyclerView.adapter = actorsAdapter
             imageViewBackPoster.load(movieInfo.backdropMovieDetailsImageUrl)
+            imageViewFavorite.isSelected = viewModel.isFavorite(movieId)
         }
     }
 

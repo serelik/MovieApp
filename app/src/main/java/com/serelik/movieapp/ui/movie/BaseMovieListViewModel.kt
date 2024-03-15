@@ -12,21 +12,15 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.serelik.movieapp.data.local.database.FavoritesDataBase
 import com.serelik.movieapp.data.local.models.Favorite
-import com.serelik.movieapp.data.local.models.GenresStorage
 import com.serelik.movieapp.data.local.models.Movie
 import com.serelik.movieapp.data.local.models.MovieUI
 import com.serelik.movieapp.data.network.BaseMoviePagingSource
-import com.serelik.movieapp.data.network.MovieDBApi
-import com.serelik.movieapp.data.network.MovieMapper
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 abstract class BaseMovieListViewModel(
-    private val movieApiService: MovieDBApi,
-    private val movieMapper: MovieMapper,
-    private val genresStorage: GenresStorage,
     @ApplicationContext context: Context
 ) : ViewModel() {
     private val dataBase = FavoritesDataBase.createDataBase(context)

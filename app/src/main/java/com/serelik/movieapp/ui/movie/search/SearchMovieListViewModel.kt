@@ -21,7 +21,7 @@ class SearchMovieListViewModel @Inject constructor(
     val movieMapper: MovieMapper,
     val genresStorage: GenresStorage,
     @ApplicationContext context: Context
-) : BaseMovieListViewModel(movieApiService, movieMapper, genresStorage, context) {
+) : BaseMovieListViewModel(context) {
 
     private val searchFlow = MutableSharedFlow<String>()
 
