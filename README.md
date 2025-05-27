@@ -9,7 +9,7 @@
 
 | Экран | Описание | Превью |
 |-------|----------|--------|
-| 🎞️ Главный экран | Табы: Popular, Now Playing, Upcoming. Поддержка Paging 3. | <img src="https://github.com/user-attachments/assets/4d964373-7a5d-45ca-9cf6-60ab1e027545" width="200"/> |
+| 🎞️ Главный экран | Табы: Popular, Now Playing, Upcoming. Поддержка Paging 3 viewPager. | <img src="https://github.com/user-attachments/assets/4d964373-7a5d-45ca-9cf6-60ab1e027545" width="200"/> |
 | 🎥 Детали фильма | Описание, постер, рейтинг, список актёров | <img src="https://github.com/user-attachments/assets/15581e90-cb37-4421-b40d-5afb57211dcb" width="200"/> |
 | 👤 Детали актера | Фото, имя, фильмография | <img src="https://github.com/user-attachments/assets/b876877e-2d71-4e61-8814-46fd230ebfac" width="200"/> |
 | ⭐ Избранное | Локально сохранённые фильмы | <img src="https://github.com/user-attachments/assets/dc49593c-5f12-4046-acd2-60aae459f01d" width="200"/> |
